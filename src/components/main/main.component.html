@@ -1,0 +1,30 @@
+<section id="hero">
+  <div class="content">
+    <h2>Simply your company ESG reporting <br> journey with our easy to use platform</h2>
+    <p style="color:black">Simply your company ESG reporting journey with our easy to use report generation platform
+      Simply your company ESG
+      reporting journey with our easy to use report generation platform Simply your company ESG reporting journey with
+      our easy to use report generation platform</p>
+    <button type="button">Join Us Now</button>
+  </div>
+  <div style="display: none;" class="images">
+    <img src="../../assets/images/image-mockups.png" alt="Hero Image">
+  </div>
+</section>
+<section id="reason">
+  <h2>How to use the tool</h2>
+  <p>We leverage Open Banking to turn your bank account info your financial hub. Control your finances like never
+    before.</p>
+  <div class="reason-list">
+    <reason-item reasonContent="{{item.reasonContent}}" reasonImageUrl="{{item.reasonImageUrl}}"
+      reasonTitle="{{item.reasonTitle}}" *ngFor="let item of reasonItems"></reason-item>
+  </div>
+</section>
+<section id="articles">
+  <h2>Lastest Articles</h2>
+  <div class="article-list">
+    <article-item class="article-list-item" articleImg="{{item.articleImg}}" articleTitle="{{item.articleTitle}}"
+      articleAuthor="{{item.articleAuthor}}" articleContent="{{item.articleContent}}"
+      *ngFor="let item of articleItems"></article-item>
+  </div>
+</section>

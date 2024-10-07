@@ -1,0 +1,178 @@
+section
+  min-height: 70vh
+  transition: 1s
+
+#hero
+  padding-left: 10rem
+  display: grid
+  grid-template-columns: calc(50vw - 10rem ) 50vw
+  align-items: center
+  background-color: #D5F6F2
+
+  .content
+    h1
+      font-size: 4rem
+      font-weight: 400
+      color: var(--dark-blue)
+      margin-block: 0
+    p
+      line-height: 1.5rem
+      color: var(--grayish-blue)
+      margin-block: 2rem
+
+  .images
+    position: relative
+    width: 100%
+    height: 100%
+    background: url(../../assets/images/bg-intro-desktop.svg)
+    background-size: 150% 150%
+    background-repeat: no-repeat
+    background-position: 17% 70%
+    z-index: 0
+
+    img
+      top: 50%
+      position: absolute
+      height: 150%
+      transform: translate(20%, -50%)
+      z-index: 1
+
+#reason
+  background-color: var(--ligh-grayish-blue)
+  padding-inline: 10rem
+  padding-block: 5rem
+  min-height: calc( 70vh - 10rem )
+
+  h2
+    font-size: 3rem
+    font-weight: 400
+    color: var(--dark-blue)
+    margin-block: 0
+
+  p
+    line-height: 1.5rem
+    color: var(--grayish-blue)
+    margin-block: 2rem
+
+  .reason
+    &-list
+      margin-top: 5rem
+      display: grid
+      grid-template-columns: repeat(4, calc(25% - 1.5rem))
+      gap: 2rem
+
+#articles
+  padding-inline: 10rem
+  padding-block: 5rem
+  background-color: #D5F6F2
+
+  h2
+    font-size: 3rem
+    font-weight: 400
+    color: var(--dark-blue)
+    margin-block: 0
+
+  .article-list
+    display: grid
+    grid-template-columns: repeat(4, calc(25% - 1.5rem))
+    gap: 2rem
+    margin-top: 5rem
+
+    &-item
+      width: 100%
+
+
+@media screen and (max-aspect-ratio: 1)
+  section
+    opacity: 1
+
+  #hero
+    padding-inline: 0
+    display: flex
+    flex-direction: column-reverse
+
+    .content
+      padding: 2rem
+      text-align: center
+
+      h1
+        font-size: 3rem
+
+    .images
+      height: unset
+      min-height: 70vh
+
+      img
+        top: unset
+        bottom: 0
+        left: 50%
+        transform: translate(-50%)
+        width: calc(100% - 2rem)
+        height: 125%
+
+  #reason
+    padding-block: 4rem
+    padding-inline: 2rem
+    text-align: center
+
+    h2
+      font-size: 2rem
+
+    .reason
+      &-list
+        margin-top: 2rem
+        grid-template-columns: repeat(2, calc(50% - 1rem))
+
+  #articles
+    padding-block: 4rem
+    padding-inline: 2rem
+
+    h2
+      font-size: 2rem
+      text-align: center
+
+    .article
+      &-list
+        margin-top: 2rem
+        grid-template-columns: repeat(2, calc(50% - 1rem))
+
+
+  @media screen and (max-width: 767px)
+    #hero
+      .content
+        padding-block: 3rem
+        padding-inline: 1.5rem
+
+        h1
+          font-size: 2rem
+
+      .images
+        min-height: 50vh
+        img
+          width: calc(100% - 1.5rem)
+
+    #reason
+      padding-block: 3rem
+      padding-inline: 1.5rem
+
+      h2
+        font-size: 1.5rem
+
+      .reason
+        &-list
+          margin-top: 1.5rem
+          grid-template-columns: auto
+          gap: 1.5rem
+
+    #articles
+      padding-block: 3rem
+      padding-inline: 1.5rem
+
+      h2
+        font-size: 1.5rem
+
+      .article
+        &-list
+          margin-top: 1.5rem
+          grid-template-columns: auto
+          gap: 1.5rem

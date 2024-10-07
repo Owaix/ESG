@@ -44,7 +44,7 @@ export class Main {
     },
     {
       articleImg: '../../../assets/images/image-plane.jpg',
-      articleTitle: 'Take your Easybank card wherever you go',
+      articleTitle: 'Take your imowais card wherever you go',
       articleContent: 'We want you to enjoy your travels. This is why we don’t charge any fees on purchases while you’re abroad. We’ll even show you …',
       articleAuthor: 'Wilson Hutton'
     },

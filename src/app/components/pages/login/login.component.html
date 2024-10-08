@@ -1,27 +1,29 @@
-<div style="background-color: #D5F6F2;">
-    <div class="login-container">
-        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-            <h2>Sign into your account</h2>
+<section id="login">
+    <div style="background-color: #D5F6F2;">
+        <div class="login-container">
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                <h2>Sign into your account</h2>
 
-            <div class="input-group">
-                <label for="username">Email</label>
-                <input type="text" id="username" name="username" [(ngModel)]="username" required
-                    #usernameField="ngModel" />
-                <div *ngIf="usernameField.invalid && usernameField.touched" class="error">
-                    Username is required
+                <div class="input-group">
+                    <label for="username">Email</label>
+                    <input type="text" id="username" name="username" [(ngModel)]="username" required
+                        #usernameField="ngModel" />
+                    <div *ngIf="usernameField.invalid && usernameField.touched" class="error">
+                        Username is required
+                    </div>
                 </div>
-            </div>
 
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" [(ngModel)]="password" required minlength="6"
-                    #passwordField="ngModel" />
-                <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
-                    Password must be at least 6 characters long
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" [(ngModel)]="password" required minlength="6"
+                        #passwordField="ngModel" />
+                    <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
+                        Password must be at least 6 characters long
+                    </div>
                 </div>
-            </div>
 
-            <button type="submit" class="links" [disabled]="loginForm.invalid">Log in</button>
-        </form>
+                <button type="submit" class="links" [disabled]="loginForm.invalid">Log in</button>
+            </form>
+        </div>
     </div>
-</div>
+</section>

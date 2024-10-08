@@ -4,21 +4,20 @@
             <h2>Let’s Create Your ESG AI Account</h2>
             <h4 style="text-align: center;color: #7a7a7a;">Already has an account? Let’s <a routerLink="/login">Log
                     In</a></h4>
-
             <div class="input-group">
                 <label for="firstname">First Name</label>
                 <input type="text" id="firstname" name="firstname" [(ngModel)]="firstname" required
                     #firstnameField="ngModel" />
-                <div *ngIf="emailAddressField.invalid && emailAddressField.touched" class="error">
-                    emailAddress is required
+                <div *ngIf="firstnameField.invalid && firstnameField.touched" class="error">
+                    First Name is required
                 </div>
             </div>
             <div class="input-group">
                 <label for="lastname">Last Name</label>
                 <input type="text" id="lastname" name="lastname" [(ngModel)]="lastname" required
                     #lastnameField="ngModel" />
-                <div *ngIf="emailAddressField.invalid && emailAddressField.touched" class="error">
-                    emailAddress is required
+                <div *ngIf="lastnameField.invalid && lastnameField.touched" class="error">
+                    Last Name is required
                 </div>
             </div>
             <div class="input-group">
@@ -30,32 +29,33 @@
                 </div>
             </div>
             <div class="input-group">
-                <label for="emailAddress">Your Phone Number</label>
-                <input type="text" id="emailAddress" name="emailAddress" [(ngModel)]="emailAddress" required
-                    #emailAddressField="ngModel" />
-                <div *ngIf="emailAddressField.invalid && emailAddressField.touched" class="error">
-                    emailAddress is required
+                <label for="phoneNumber">Your Phone Number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber" required
+                    #phoneNumberField="ngModel" />
+                <div *ngIf="phoneNumberField.invalid && phoneNumberField.touched" class="error">
+                    Phone Number is required
                 </div>
             </div>
             <div class="input-group">
-                <label for="emailAddress">Your Company Name</label>
-                <input type="text" id="emailAddress" name="emailAddress" [(ngModel)]="emailAddress" required
-                    #emailAddressField="ngModel" />
-                <div *ngIf="emailAddressField.invalid && emailAddressField.touched" class="error">
-                    emailAddress is required
+                <label for="companyName">Your Company Name</label>
+                <input type="text" id="companyName" name="companyName" [(ngModel)]="companyName" required
+                    #companyNameField="ngModel" />
+                <div *ngIf="companyNameField.invalid && companyNameField.touched" class="error">
+                    Company Name is required
                 </div>
             </div>
             <div class="input-group">
-                <label for="emailAddress">Your Company Industry</label>
-                <select>
+                <label for="companyIndustry">Your Company Industry</label>
+                <select id="companyIndustry" name="companyIndustry" [(ngModel)]="companyIndustry" required
+                    #companyIndustryField="ngModel">
                     <option value="1">Microsoft</option>
                     <option value="1">Microsoft</option>
                     <option value="1">Microsoft</option>
                     <option value="1">Microsoft</option>
                     <option value="1">Microsoft</option>
                 </select>
-                <div *ngIf="emailAddressField.invalid && emailAddressField.touched" class="error">
-                    emailAddress is required
+                <div *ngIf="companyIndustryField.invalid && companyIndustryField.touched" class="error">
+                    Company Industry is required
                 </div>
             </div>
             <button type="submit" class="links" [disabled]="loginForm.invalid">Create Account</button>

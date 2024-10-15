@@ -9,6 +9,8 @@ import { ExtraOptions, RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from "./pages/login/login.component";
 import { SignupComponent } from "./pages/signup/signup.component";
 import { FormsModule } from "@angular/forms";
+import { ApiService } from "../service/api.service";
+import { HttpClientModule } from "@angular/common/http";
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
@@ -25,7 +27,8 @@ const routerOptions: ExtraOptions = {
   imports: [
     CommonModule,
     RouterModule.forRoot(routes, routerOptions),
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   declarations: [
     Header,
@@ -36,6 +39,7 @@ const routerOptions: ExtraOptions = {
     LoginComponent,
     SignupComponent
   ],
+  providers: [ApiService],
   exports: [
     Header,
     Main,

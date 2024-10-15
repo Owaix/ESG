@@ -1,0 +1,39 @@
+[debug] [2024-10-15T10:00:24.771Z] ----------------------------------------------------------------------
+[debug] [2024-10-15T10:00:24.773Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\owaitmuh\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2024-10-15T10:00:24.774Z] CLI Version:   13.21.0
+[debug] [2024-10-15T10:00:24.774Z] Platform:      win32
+[debug] [2024-10-15T10:00:24.774Z] Node Version:  v18.15.0
+[debug] [2024-10-15T10:00:24.775Z] Time:          Tue Oct 15 2024 15:00:24 GMT+0500 (Pakistan Standard Time)
+[debug] [2024-10-15T10:00:24.775Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-10-15T10:00:24.778Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-10-15T10:00:24.875Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-10-15T10:00:24.876Z] > authorizing via signed-in user (aowais37@gmail.com)
+[debug] [2024-10-15T10:00:24.876Z] [iam] checking project esg-ang for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-10-15T10:00:24.877Z] Checked if tokens are valid: false, expires at: 1728386855352
+[debug] [2024-10-15T10:00:24.877Z] Checked if tokens are valid: false, expires at: 1728386855352
+[debug] [2024-10-15T10:00:24.877Z] > refreshing access token with scopes: []
+[debug] [2024-10-15T10:00:24.878Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-10-15T10:00:24.878Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-10-15T10:00:25.259Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-10-15T10:00:25.259Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-10-15T10:00:25.270Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/esg-ang:testIamPermissions [none]
+[debug] [2024-10-15T10:00:25.270Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/esg-ang:testIamPermissions x-goog-quota-user=projects/esg-ang
+[debug] [2024-10-15T10:00:25.270Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/esg-ang:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-10-15T10:00:25.518Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-10-15T10:00:25.518Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2024-10-15T10:00:26.737Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/esg-ang:testIamPermissions 200
+[debug] [2024-10-15T10:00:26.737Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/esg-ang:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-10-15T10:00:26.737Z] Checked if tokens are valid: true, expires at: 1728990024259
+[debug] [2024-10-15T10:00:26.737Z] Checked if tokens are valid: true, expires at: 1728990024259
+[debug] [2024-10-15T10:00:26.738Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/esg-ang [none]
+[debug] [2024-10-15T10:00:27.415Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/esg-ang 200
+[debug] [2024-10-15T10:00:27.415Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/esg-ang {"projectId":"esg-ang","projectNumber":"1005573240756","displayName":"ESG-ang","name":"projects/esg-ang","resources":{"hostingSite":"esg-ang"},"state":"ACTIVE","etag":"1_8a39f04f-b5c0-4b32-a4a6-0257f24915a5"}
+[info] 
+[info] === Deploying to 'esg-ang'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2024-10-15T10:00:27.422Z] Checked if tokens are valid: true, expires at: 1728990024259
+[debug] [2024-10-15T10:00:27.422Z] Checked if tokens are valid: true, expires at: 1728990024259
+[debug] [2024-10-15T10:00:27.423Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/esg-ang/versions [none]
+[debug] [2024-10-15T10:00:27.423Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/esg-ang/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}

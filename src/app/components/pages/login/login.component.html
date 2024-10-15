@@ -6,7 +6,7 @@
 
                 <div class="input-group">
                     <label for="username">Email</label>
-                    <input type="text" id="username" name="username" [(ngModel)]="username" required
+                    <input type="text" id="username" name="username" [(ngModel)]="this.users.company_email" required
                         #usernameField="ngModel" />
                     <div *ngIf="usernameField.invalid && usernameField.touched" class="error">
                         Username is required
@@ -15,8 +15,8 @@
 
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" [(ngModel)]="password" required minlength="6"
-                        #passwordField="ngModel" />
+                    <input type="password" id="password" name="password" [(ngModel)]="this.users.password" required
+                        minlength="6" #passwordField="ngModel" />
                     <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
                         Password must be at least 6 characters long
                     </div>

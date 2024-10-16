@@ -11,6 +11,7 @@ import { SignupComponent } from "./pages/signup/signup.component";
 import { FormsModule } from "@angular/forms";
 import { ApiService } from "../service/api.service";
 import { HttpClientModule } from "@angular/common/http";
+import { AuthService } from "../service/auth.service";
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
@@ -39,7 +40,7 @@ const routerOptions: ExtraOptions = {
     LoginComponent,
     SignupComponent
   ],
-  providers: [ApiService],
+  providers: [ApiService , AuthService],
   exports: [
     Header,
     Main,

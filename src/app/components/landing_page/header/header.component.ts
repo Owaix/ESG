@@ -1,4 +1,5 @@
 import { Component, ViewChild, AfterViewInit, ElementRef } from "@angular/core";
+import { AuthService } from "src/app/service/auth.service";
 
 @Component({
   selector: 'header',
@@ -7,12 +8,25 @@ import { Component, ViewChild, AfterViewInit, ElementRef } from "@angular/core";
 })
 export class Header {
   @ViewChild('menu') menu?: ElementRef<HTMLImageElement>;
-
   @ViewChild('close') close?: ElementRef<HTMLImageElement>;
-
   @ViewChild('nav') nav?: ElementRef<HTMLElement>;
-
+  isLoggedIn: boolean = false;
+  userEmail: string | null = null;
   navigations = ['Home', 'About', 'Contact', 'Blog', 'Careers'];
+
+  constructor(private authService: AuthService) { }
+
+  ngOnInit() {
+    // Subscribe to authentication status
+    this.authService.isAuthenticated.subscribe((isAuth) => {
+      this.isLoggedIn = isAuth;
+      this.userEmail = isAuth ? this.authService.getUserEmail() : null;
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 
   protected showMenu() {
     if (this.nav && this.menu && this.close) {
@@ -33,4 +47,5 @@ export class Header {
       this.close.nativeElement.style.display = '';
     }
   }
+
 }

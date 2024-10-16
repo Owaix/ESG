@@ -5,23 +5,27 @@
                 <h2>Sign into your account</h2>
 
                 <div class="input-group">
-                    <label for="username">Email</label>
-                    <input type="text" id="username" name="username" [(ngModel)]="this.users.company_email" required
-                        #usernameField="ngModel" />
-                    <div *ngIf="usernameField.invalid && usernameField.touched" class="error">
-                        Username is required
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" [(ngModel)]="this.users.email" required
+                        #emailField="ngModel" />
+                    <div *ngIf="emailField.invalid && emailField.touched" class="error">
+                        email is required
                     </div>
                 </div>
 
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" [(ngModel)]="this.users.password" required
-                        minlength="6" #passwordField="ngModel" />
-                    <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
+                    <input type="password" id="password" name="password" [(ngModel)]="users.password" required
+                        [ngClass]="{'is-invalid': passwordField.invalid && passwordField.touched}" minlength="6"
+                        #passwordField="ngModel" pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,}" />
+                    <div *ngIf="passwordField.errors?.['minlength'] && passwordField.touched" class="error">
                         Password must be at least 6 characters long
                     </div>
+                    <div *ngIf="passwordField.errors?.['pattern'] && passwordField.touched" class="error">
+                        Password must contain at least one number, one special character, and one letter
+                    </div>
                 </div>
-
+                <p style="color:red;">{{errormsg}}</p>
                 <button type="submit" class="links" [disabled]="loginForm.invalid">Log in</button>
             </form>
         </div>

@@ -10,5 +10,13 @@
   <a routerLink="" fragment="articles">PRICING</a>
   <a routerLink="" fragment="articles">CONTACT US</a>
 </nav>
-<a routerLink="/signup" class="links">SIGN UP</a>
-<a routerLink="/login" class="links">LOG IN</a>
+<ng-container *ngIf="isLoggedIn; else loggedOutTemplate">
+  <div class="user-info">
+    <span class="email">{{ userEmail }}</span>
+    <button class="logout" (click)="logout()">Logout</button>
+  </div>
+</ng-container>
+<ng-template #loggedOutTemplate>
+  <a routerLink="/signup" class="links">SIGN UP</a>
+  <a routerLink="/login" class="links">LOG IN</a>
+</ng-template>

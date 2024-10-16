@@ -5,57 +5,90 @@
             <h4 style="text-align: center;color: #7a7a7a;">Already has an account? Let’s <a routerLink="/login">Log
                     In</a></h4>
             <div class="input-group">
-                <label for="firstname">First Name</label>
-                <input type="text" id="firstname" name="firstname" [(ngModel)]="this.users.firstname" required
-                    #firstnameField="ngModel" />
-                <div *ngIf="firstnameField.invalid && firstnameField.touched" class="error">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" [(ngModel)]="this.users.name" required #nameField="ngModel" />
+                <div *ngIf="nameField.invalid && nameField.touched" class="error">
                     First Name is required
                 </div>
             </div>
             <div class="input-group">
-                <label for="lastname">Last Name</label>
-                <input type="text" id="lastname" name="lastname" [(ngModel)]="this.users.lastname" required
-                    #lastnameField="ngModel" />
-                <div *ngIf="lastnameField.invalid && lastnameField.touched" class="error">
-                    Last Name is required
-                </div>
-            </div>
-            <div class="input-group">
-                <label for="emailAddress">Your Email Address</label>
-                <input type="text" id="emailAddress" name="emailAddress" [(ngModel)]="this.users.company_email" required
-                    #emailAddressField="ngModel" />
-                <div *ngIf="emailAddressField.invalid && emailAddressField.touched" class="error">
-                    emailAddress is required
-                </div>
-            </div>
-            <div class="input-group">
-                <label for="phoneNumber">Your Phone Number</label>
-                <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="this.users.phoneno" required
-                    #phoneNumberField="ngModel" />
-                <div *ngIf="phoneNumberField.invalid && phoneNumberField.touched" class="error">
+                <label for="phoneno">Your Phone Number</label>
+                <input type="text" id="phoneno" name="phoneno" [(ngModel)]="this.users.phoneno" required
+                    #phonenoField="ngModel" />
+                <div *ngIf="phonenoField.invalid && phonenoField.touched" class="error">
                     Phone Number is required
                 </div>
             </div>
             <div class="input-group">
-                <label for="companyName">Your Company Name</label>
-                <input type="text" id="companyName" name="companyName" [(ngModel)]="this.users.company_name" required
-                    #companyNameField="ngModel" />
-                <div *ngIf="companyNameField.invalid && companyNameField.touched" class="error">
+                <label for="email">Your Email Address</label>
+                <input type="text" id="email" name="email" [(ngModel)]="this.users.email" required
+                    #emailField="ngModel" />
+                <div *ngIf="emailField.invalid && emailField.touched" class="error">
+                    email is required
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="company_name">Your Company Name</label>
+                <input type="text" id="company_name" name="company_name"
+                    [(ngModel)]="this.users.company_info.company_name" required #company_nameField="ngModel" />
+                <div *ngIf="company_nameField.invalid && company_nameField.touched" class="error">
                     Company Name is required
                 </div>
             </div>
             <div class="input-group">
-                <label for="companyIndustry">Your Company Industry</label>
-                <select id="companyIndustry" name="companyIndustry" [(ngModel)]="this.users.companyIndustry" required
-                    #companyIndustryField="ngModel">
-                    <option value="1">Microsoft</option>
-                    <option value="1">Microsoft</option>
-                    <option value="1">Microsoft</option>
-                    <option value="1">Microsoft</option>
-                    <option value="1">Microsoft</option>
+                <label for="category_id">Your Company Category</label>
+                <select (change)="oncategoryChange($event)" id="category_id" name="category_id"
+                    [(ngModel)]="this.users.company_info.category_id" required #category_idField="ngModel">
+                    <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
                 </select>
-                <div *ngIf="companyIndustryField.invalid && companyIndustryField.touched" class="error">
-                    Company Industry is required
+                <div *ngIf="category_idField.invalid && category_idField.touched" class="error">
+                    Company Category is required
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="type_id">Your Company Type</label>
+                <select id="type_id" name="type_id" [(ngModel)]="this.users.company_info.type_id" required
+                    #type_idField="ngModel">
+                    <option *ngFor="let type of typeList" [value]="type?.id">{{ type?.type }}</option>
+                </select>
+                <div *ngIf="type_idField.invalid && type_idField.touched" class="error">
+                    Company Type is required
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="sector_id">Your Company Sector</label>
+                <select id="sector_id" name="sector_id" [(ngModel)]="this.users.company_info.sector_id" required
+                    #sector_idField="ngModel">
+                    <option *ngFor="let sector of sectorList" [value]="sector?.id">{{ sector?.name }}</option>
+                </select>
+                <div *ngIf="sector_idField.invalid && sector_idField.touched" class="error">
+                    Company Sector is required
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="password">Create Password</label>
+                <input type="password" id="password" name="password" [(ngModel)]="users.password" required
+                    [ngClass]="{'is-invalid': passwordField.invalid && passwordField.touched}" minlength="6"
+                    #passwordField="ngModel" pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,}" />
+                <div *ngIf="passwordField.errors?.['minlength'] && passwordField.touched" class="error">
+                    Password must be at least 6 characters long
+                </div>
+                <div *ngIf="passwordField.errors?.['pattern'] && passwordField.touched" class="error">
+                    Password must contain at least one number, one special character, and one letter
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password"
+                    [(ngModel)]="users.confirm_password" required minlength="6"
+                    [ngClass]="{'is-invalid': confirm_passwordField.invalid && confirm_passwordField.touched}"
+                    #confirm_passwordField="ngModel" />
+                <div *ngIf="confirm_passwordField.errors?.['minlength'] && confirm_passwordField.touched" class="error">
+                    Password must be at least 6 characters long
+                </div>
+                <div *ngIf="passwordMismatch && confirm_passwordField.touched" class="error">
+                    Password and Confirm Password do not match
                 </div>
             </div>
             <button type="submit" class="links" [disabled]="loginForm.invalid">Create Account</button>

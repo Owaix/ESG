@@ -12,11 +12,13 @@ import { FormsModule } from "@angular/forms";
 import { ApiService } from "../service/api.service";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthService } from "../service/auth.service";
+import { EmailVerificationComponent } from './pages/email-verification/email-verification.component';
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent }
+  { path: 'signup', component: SignupComponent },
+  { path: 'everif', component: EmailVerificationComponent }
 ];
 
 const routerOptions: ExtraOptions = {
@@ -38,9 +40,10 @@ const routerOptions: ExtraOptions = {
     ReasonItem,
     ArticleItem,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    EmailVerificationComponent
   ],
-  providers: [ApiService , AuthService],
+  providers: [ApiService, AuthService],
   exports: [
     Header,
     Main,

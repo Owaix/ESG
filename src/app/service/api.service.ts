@@ -12,6 +12,7 @@ import { User } from '../models/User';
 export class ApiService {
     constructor(private http: HttpClient) { }
     register(user: User): Observable<any> {
+        console.log(JSON.stringify(user));
         return this.http.post(environment.BASE_URL + 'auth/signup', user);
     }
 
@@ -24,7 +25,11 @@ export class ApiService {
     }
 
     Getcategories(): Observable<any> {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55X2lkIjoxLCJpYXQiOjE3MjkwODYwMzgsImV4cCI6MTczMTY3ODAzOH0.7CqzrlNYzPmZqVHqT6St5HUQp-ElZaLdyFbTdnzUn44';
+        return this.http.get(environment.BASE_URL + 'company/categories');
+    }
+
+    GetProfile(): Observable<any> {
+        const token = this.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         return this.http.get(environment.BASE_URL + 'company/categories', { headers });
     }
@@ -33,20 +38,20 @@ export class ApiService {
         return this.http.post(environment.BASE_URL + 'ddl/SaveChecks', user);
     }
 
-    get_profile(id: string | null): Observable<any> {
-        const token = this.getToken();  // Replace this with your method of retrieving the token        
+    get_profile(): Observable<any> {
+        const token = this.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.get(environment.BASE_URL + 'users/me/' + id, { headers });
+        return this.http.get(environment.BASE_URL + 'company/profile', { headers });
     }
 
     update_profile(user: User): Observable<any> {
-        const token = this.getToken();  // Replace this with your method of retrieving the token        
+        const token = this.getToken();
         user.token = token;
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         return this.http.put(environment.BASE_URL + 'users/update_profile', user, { headers });
     }
 
     private getToken(): string {
-        return localStorage.getItem('authToken') || "";
+        return localStorage.getItem('token') || "";
     }
 }

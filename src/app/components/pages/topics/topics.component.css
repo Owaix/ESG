@@ -1,0 +1,56 @@
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards in a row */
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Center the cards horizontally */
+  padding-top: 50px; /* Add space at the top */
+  margin: 0 auto; /* Center the container */
+  max-width: 1000px; /* Set a max width to center the grid layout */
+}
+
+.card {
+  cursor: pointer;
+  background-color: #f9f9f9;
+  padding: 10px; /* Smaller padding */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 200px; /* Smaller fixed width for cards */
+  text-align: center;
+}
+
+.card:hover {
+  background: #e2e2e2;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-image {
+  width: 61%;
+  height: 120px; /* Smaller image height */
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px; /* Space between image and text */
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1200px) {
+  .card-container {
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row for tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  .card-container {
+    grid-template-columns: 1fr; /* 1 card per row for mobile devices */
+  }
+}

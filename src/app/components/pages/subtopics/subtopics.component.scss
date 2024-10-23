@@ -1,0 +1,64 @@
+.content {
+  padding: 20px; // Add padding around the content
+  max-width: 800px; // Set a max width for larger screens
+  margin: 0 auto; // Center the content
+
+  .responsive-title {
+      font-size: 2.5rem; // Base size for large screens
+      margin: 0 0 10px; // Margin below the title
+      text-align: center; // Center the title text
+  }
+
+  .responsive-description {
+      font-size: 1.2rem; // Base size for large screens
+      margin: 0 0 20px; // Margin below the description
+      text-align: center; // Center the description text
+  }
+
+  @media (max-width: 768px) { // For tablets and smaller screens
+      .responsive-title {
+          font-size: 2rem; // Adjust font size for smaller screens
+      }
+
+      .responsive-description {
+          font-size: 1rem; // Adjust font size for smaller screens
+      }
+  }
+
+  @media (max-width: 480px) { // For mobile screens
+      .responsive-title {
+          font-size: 1.5rem; // Further adjust for mobile
+      }
+
+      .responsive-description {
+          font-size: 0.9rem; // Further adjust for mobile
+      }
+  }
+}
+
+.tile-container {
+  display: inline-grid; // Use flexbox for tile layout
+  overflow-x: auto; // Allow horizontal scrolling
+  padding: 10px; // Padding around the tile container
+  gap: 10px; // Space between bars
+  white-space: nowrap; // Prevent bars from wrapping
+
+  .bar {
+      background-color: #f0f0f0; // Background color for bars
+      border: 1px solid #ccc; // Border for bars
+      border-radius: 5px; // Rounded corners
+      padding: 10px 20px; // Padding inside each bar
+      cursor: pointer; // Change cursor on hover
+      transition: background-color 0.3s, transform 0.3s; // Smooth transitions for hover effect
+      display: inline-block; // Keep bars inline
+
+      &:hover {
+          background-color: #d9d9d9; // Change background on hover
+          transform: scale(1.05); // Slightly enlarge on hover
+      }
+
+      .bar-label {
+          font-weight: bold; // Make the label bold
+      }
+  }
+}

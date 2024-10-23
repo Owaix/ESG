@@ -13,12 +13,16 @@ import { ApiService } from "../service/api.service";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthService } from "../service/auth.service";
 import { EmailVerificationComponent } from './pages/email-verification/email-verification.component';
+import { TopicsComponent } from './pages/topics/topics.component';
+import { SubtopicsComponent } from './pages/subtopics/subtopics.component';
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'everif', component: EmailVerificationComponent }
+  { path: 'everif', component: EmailVerificationComponent },
+  { path: 'topics', component: TopicsComponent },
+  { path: 'subtopics/:id', component: SubtopicsComponent }
 ];
 
 const routerOptions: ExtraOptions = {
@@ -41,7 +45,9 @@ const routerOptions: ExtraOptions = {
     ArticleItem,
     LoginComponent,
     SignupComponent,
-    EmailVerificationComponent
+    EmailVerificationComponent,
+    TopicsComponent,
+    SubtopicsComponent
   ],
   providers: [ApiService, AuthService],
   exports: [

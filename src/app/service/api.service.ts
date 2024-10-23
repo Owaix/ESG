@@ -1,4 +1,3 @@
-// user.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,7 +14,6 @@ export class ApiService {
         console.log(JSON.stringify(user));
         return this.http.post(environment.BASE_URL + 'auth/signup', user);
     }
-
     login(user: User): Observable<any> {
         return this.http.post(environment.BASE_URL + 'auth/login', user, {
             headers: new HttpHeaders({
@@ -23,34 +21,38 @@ export class ApiService {
             })
         });
     }
-
     Getcategories(): Observable<any> {
         return this.http.get(environment.BASE_URL + 'company/categories');
     }
-
     GetProfile(): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         return this.http.get(environment.BASE_URL + 'company/categories', { headers });
     }
-
     SaveChecks(user: any): Observable<any> {
         return this.http.post(environment.BASE_URL + 'ddl/SaveChecks', user);
     }
-
     get_profile(): Observable<any> {
         const token = this.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         return this.http.get(environment.BASE_URL + 'company/profile', { headers });
     }
-
+    get_topics(): Observable<any> {
+        const token = this.getToken();
+        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+        return this.http.get(environment.BASE_URL + 'topic/list', { headers });
+    }
+    get_subtopics(id: number): Observable<any> {
+        const token = this.getToken();
+        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+        return this.http.get(environment.BASE_URL + 'topic/subtopics/' + id, { headers });
+    }
     update_profile(user: User): Observable<any> {
         const token = this.getToken();
         user.token = token;
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         return this.http.put(environment.BASE_URL + 'users/update_profile', user, { headers });
     }
-
     private getToken(): string {
         return localStorage.getItem('token') || "";
     }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { catchError, Subscription, throwError } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { ApiService } from 'src/app/service/api.service';
-import * as CryptoJS from 'crypto-js';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 

@@ -1,0 +1,17 @@
+<div class="question-list">
+    <form (ngSubmit)="saveResponses()">
+      <div *ngFor="let question of questions; let i = index" class="question-item">
+        <label [for]="'question' + i">{{ question.question }}</label>
+        <input
+          type="text"
+          [id]="'question' + i"
+          [(ngModel)]="responses[i]"
+          [name]="'response' + i"
+          required
+        />
+      </div>
+  
+      <button type="submit">Save</button>
+    </form>
+  </div>
+  

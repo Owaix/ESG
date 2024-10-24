@@ -15,6 +15,8 @@ import { AuthService } from "../service/auth.service";
 import { EmailVerificationComponent } from './pages/email-verification/email-verification.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { SubtopicsComponent } from './pages/subtopics/subtopics.component';
+import { QuestionsComponent } from './pages/questions/questions.component';
+import { EncryptionService } from "../service/encrypt.service";
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
@@ -22,7 +24,9 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'everif', component: EmailVerificationComponent },
   { path: 'topics', component: TopicsComponent },
-  { path: 'subtopics/:id', component: SubtopicsComponent }
+  { path: 'subtopics/:id', component: SubtopicsComponent },
+  { path: 'question/:id', component: QuestionsComponent }
+
 ];
 
 const routerOptions: ExtraOptions = {
@@ -47,9 +51,10 @@ const routerOptions: ExtraOptions = {
     SignupComponent,
     EmailVerificationComponent,
     TopicsComponent,
-    SubtopicsComponent
+    SubtopicsComponent,
+    QuestionsComponent
   ],
-  providers: [ApiService, AuthService],
+  providers: [ApiService, AuthService, EncryptionService],
   exports: [
     Header,
     Main,

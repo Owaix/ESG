@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { environment } from './env';
 import { User } from '../models/User';
 
@@ -46,6 +46,17 @@ export class ApiService {
         const token = this.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         return this.http.get(environment.BASE_URL + 'topic/subtopics/' + id, { headers });
+    }
+
+    get_questions(numberOfCalls: string[]): Observable<any[]> {
+        const token = this.getToken();
+        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+        const apiCalls: Observable<any>[] = [];
+        for (let i = 0; i < numberOfCalls.length; i++) {
+            console.log(environment.BASE_URL + 'topic/question/' + numberOfCalls[i]);
+            apiCalls.push(this.http.get(environment.BASE_URL + 'topic/question/' + numberOfCalls[i], { headers }));
+        }
+        return forkJoin(apiCalls);
     }
     update_profile(user: User): Observable<any> {
         const token = this.getToken();

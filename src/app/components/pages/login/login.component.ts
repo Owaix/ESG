@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
               console.log(response.data.access_token);
               //console.log(encryptedToken);
               this.authService.login(this.users.email);
-              this.router.navigate(['/']); // Redirect to home or wherever after login
+              this.router.navigate(['/topics']); // Redirect to home or wherever after login
             })
           }
         },

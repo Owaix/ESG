@@ -1,17 +1,19 @@
-<div class="question-list">
-    <form (ngSubmit)="saveResponses()">
-      <div *ngFor="let question of questions; let i = index" class="question-item">
-        <label [for]="'question' + i">{{ question.question }}</label>
-        <input
-          type="text"
-          [id]="'question' + i"
-          [(ngModel)]="responses[i]"
-          [name]="'response' + i"
-          required
-        />
+<div class="question-list" style="text-align: -webkit-center;margin-left: 2%;margin-top: 2%;">
+  <form (ngSubmit)="saveResponses()">
+    <div style="text-align: left;" *ngFor="let question of questions; let i = index" class="question-item">
+      <label [for]="'question' + i">{{ question.question }}</label>
+      <div *ngIf="question.type == 'co'" style="margin-top: 10px;margin-left: 10px;">
+        <label *ngFor="let ans of question.answers;" class="custom-radio">
+          <input (click)="selectAns(ans.id)" type="radio" name="radio" checked>
+          <span class="radio"></span>
+          {{ans.answer}}
+        </label>
       </div>
-  
-      <button type="submit">Save</button>
-    </form>
-  </div>
-  
+      <input *ngIf="question.type == 'ui'" type="text" [id]="'question' + i" [(ngModel)]="responses[i]"
+        [name]="'response' + i" required />
+    </div>
+    <div style="text-align: center;">
+      <button style="width: 30%;" type="submit">Save</button>
+    </div>
+  </form>
+</div>

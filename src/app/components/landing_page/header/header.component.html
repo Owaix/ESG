@@ -9,8 +9,10 @@
   <a routerLink="" fragment="reason">PRODUCT</a>
   <a routerLink="" fragment="articles">PRICING</a>
   <a routerLink="" fragment="articles">CONTACT US</a>
+  <a style="color: white" routerLink="/signup" class="links">SIGN UP</a>
+  <a style="color: white" routerLink="/login" class="links">LOG IN</a>
 </nav>
-<ng-container *ngIf="isLoggedIn; else loggedOutTemplate">
+<!-- <ng-container *ngIf="isLoggedIn; else loggedOutTemplate">
   <div class="user-info">
     <span class="email">{{ userEmail }}</span>
     <button class="logout" (click)="logout()">Logout</button>
@@ -19,4 +21,4 @@
 <ng-template #loggedOutTemplate>
   <a routerLink="/signup" class="links">SIGN UP</a>
   <a routerLink="/login" class="links">LOG IN</a>
-</ng-template>
+</ng-template> -->

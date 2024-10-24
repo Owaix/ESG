@@ -63,7 +63,14 @@ export class QuestionsComponent implements OnInit {
       company_answers: companyAnswers
     };
 
-    console.log('JSON Payload:', payload);
+    this.mySubscription = this.service.SaveQuestions(payload).subscribe(x => {
+      alert(x);
+    })
+
+  }
+
+  selectAns(id: number) {
+    alert(id);
   }
   formatAnswer(type: string, answer: string): any {
     if (type === 'ui' || type === 'co') {

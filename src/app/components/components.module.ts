@@ -24,9 +24,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'everif', component: EmailVerificationComponent },
   { path: 'topics', component: TopicsComponent },
-  { path: 'subtopics/:id', component: SubtopicsComponent },
-  { path: 'question/:id', component: QuestionsComponent }
-
+  { path: 'subtopics/:id/:report_id', component: SubtopicsComponent },
+  { path: 'question/:id/:qid/:report_id', component: QuestionsComponent }
 ];
 
 const routerOptions: ExtraOptions = {

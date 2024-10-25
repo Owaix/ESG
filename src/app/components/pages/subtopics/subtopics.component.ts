@@ -15,11 +15,13 @@ export class SubtopicsComponent {
   cards: any[] = [];
   name: string = "";
   description: string = "";
+  report_id: string = "";
 
   constructor(private encrypt: EncryptionService, private service: ApiService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       let id = +params['id']; // Convert to number
+      this.report_id = params['report_id'];
       this.mySubscription = this.service.get_subtopics(id).subscribe(x => {
         if (x.status == "SUCCESS") {
           this.cards = x.data.subtopics;
@@ -32,7 +34,7 @@ export class SubtopicsComponent {
 
   showQues(id: number[]) {
     let decryptedArray = this.encrypt.encrypt(id.join(','));
-    this.router.navigate(['/question', decryptedArray]);
+    this.router.navigate(['/question', decryptedArray, 0, this.report_id]);
   }
 
   ngOnDestroy() {

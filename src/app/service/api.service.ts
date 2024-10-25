@@ -45,6 +45,12 @@ export class ApiService {
         return this.http.get(environment.BASE_URL + 'topic/subtopics/' + id, { headers });
     }
 
+    get_question(id: string, report_id: string): Observable<any> {
+        const token = this.getToken();
+        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+        return this.http.get(environment.BASE_URL + 'topic/question/' + id + '/report/' + report_id, { headers });
+    }
+
     get_questions(numberOfCalls: string[]): Observable<any[]> {
         const token = this.getToken();
         const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });

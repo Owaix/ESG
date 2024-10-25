@@ -92,3 +92,49 @@ button:hover {
 .custom-radio input:checked+.radio::after {
   transform: translate(-50%, -50%) scale(1);
 }
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+.custom-checkbox .checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #007BFF;
+  background-color: white;
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.2s ease;
+}
+
+/* Custom checkmark */
+.custom-checkbox .checkbox::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Checked state: Show checkmark */
+.custom-checkbox input[type="checkbox"]:checked + .checkbox {
+  background-color: #007BFF;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox::after {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}

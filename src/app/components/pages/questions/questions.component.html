@@ -3,17 +3,25 @@
     <div style="text-align: left;" *ngFor="let question of questions; let i = index" class="question-item">
       <label [for]="'question' + i">{{ question.question }}</label>
       <div *ngIf="question.type == 'co'" style="margin-top: 10px;margin-left: 10px;">
-        <label *ngFor="let ans of question.answers;" class="custom-radio">
-          <input (click)="selectAns(ans.id)" type="radio" name="radio" checked>
+        <label *ngFor="let option of question.options;" class="custom-radio">
+          <!-- <input type="radio" name="radio" checked> -->
+          <input type="radio" [name]="'radio' + i" [(ngModel)]="responses[i]" [value]="option.id">
           <span class="radio"></span>
-          {{ans.answer}}
+          {{option.answer}}
+        </label>
+      </div>
+      <div *ngIf="question.type == 'cm'" style="margin-top: 10px;margin-left: 10px;">
+        <label *ngFor="let ans of question.answers;" class="custom-checkbox">
+          <input type="checkbox" name="checkbox" checked>
+          <span class="checkbox"></span>
+          Option 1
         </label>
       </div>
       <input *ngIf="question.type == 'ui'" type="text" [id]="'question' + i" [(ngModel)]="responses[i]"
         [name]="'response' + i" required />
     </div>
     <div style="text-align: center;">
-      <button style="width: 30%;" type="submit">Save</button>
+      <button style="width: 30%;" type="submit">Next</button>
     </div>
   </form>
 </div>

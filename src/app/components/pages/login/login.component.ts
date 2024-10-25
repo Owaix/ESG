@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
             //const encryptedToken = CryptoJS.AES.encrypt(x.data.access_token, token_secret).toString();
             localStorage.setItem('token', response.data.access_token);
             this.mySubscription = this.service.GetProfile().subscribe(x => {
-              console.log(response.data.access_token);
               //console.log(encryptedToken);
               this.authService.login(this.users.email);
               this.router.navigate(['/topics']); // Redirect to home or wherever after login

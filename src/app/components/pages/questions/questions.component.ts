@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
-import * as CryptoJS from 'crypto-js';
+import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
 
 @Component({
@@ -10,13 +10,18 @@ import { EncryptionService } from 'src/app/service/encrypt.service';
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css']
 })
+
 export class QuestionsComponent implements OnInit {
   private mySubscription: Subscription | null = null;  // Initialized as null
   questions: any[] = [];
   responses: string[] = [];
+  noofquestions: number = 0;
+  totalquestions: number = 0;
+  questionsIds: string[] = [];
 
   constructor(private encrypt: EncryptionService,
     private service: ApiService,
+    private dataservice: DataService,
     private router: Router,
     private route: ActivatedRoute) {
     this.responses = new Array(this.questions.length).fill('');
@@ -25,21 +30,21 @@ export class QuestionsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       let encryptedData = params['id'];
-      console.log(encryptedData);
+      let qid = params['qid'];
+      let report_id = params['report_id'];
       if (encryptedData) {
         try {
           let decryptedArray = this.encrypt.decrypt(encryptedData);
-          let decrypted = decryptedArray.split(',');
-          this.mySubscription = this.service.get_questions(decrypted).subscribe(
+          report_id = this.encrypt.decrypt(report_id);
+          this.questionsIds = decryptedArray.split(',');
+          qid = this.questionsIds[qid];
+          this.mySubscription = this.service.get_question(qid, report_id).subscribe(
             response => {
-              for (let i = 0; i < response.length; i++) {
-                let x = response[i];
-                if (x.status == "SUCCESS") {
-                  this.questions.push(x.data);
-                }
+              let x = response;
+              if (x.status == "SUCCESS") {
+                this.questions.push(x.data);
               }
-
-              console.log(response);
+              console.log(x);
             },
             error => {
               console.error('Error fetching questions:', error);
@@ -51,26 +56,79 @@ export class QuestionsComponent implements OnInit {
       }
     });
   }
+
   saveResponses(): void {
-    const companyAnswers = this.questions.map((q, index) => ({
-      topic_question_id: q.id,
-      topic_question_type: q.type,
-      topic_answer: this.formatAnswer(q.type, this.responses[index])
-    }));
+    console.log('Selected Responses:', this.responses);
+    // const companyAnswers = this.questions.map((q, index) => ({
+    //   topic_question_id: q.id,
+    //   topic_question_type: q.type,
+    //   topic_answer: this.formatAnswer(q.type, this.responses[index])
+    // }));
 
-    const payload = {
-      report_ref_no: "ESG240930-cd7748-1",
-      company_answers: companyAnswers
-    };
+    // const payload = {
+    //   report_ref_no: "ESG240930-cd7748-1",
+    //   company_answers: companyAnswers
+    // };
+    // this.questions = [];
+    // this.questions.push({
+    //   "id": 1,
+    //   "question": "Organisations’ legal name",
+    //   "note": null,
+    //   "sub_topic_id": 1,
+    //   "type": "ui",
+    //   "level": 1
+    // });
 
-    this.mySubscription = this.service.SaveQuestions(payload).subscribe(x => {
-      alert(x);
-    })
+
+    // this.mySubscription = this.service.SaveQuestions(payload).subscribe(x => {
+    //   alert(x);
+    // })
 
   }
 
-  selectAns(id: number) {
-    alert(id);
+  selectAns(obj: any) {
+    if (obj.next_questions != null) {
+      this.questions = [];
+      for (let i = 0; i < obj.next_questions.length; i++) {
+        let question = obj.next_questions[i];
+        this.dataservice.addQuestions({
+          "id": question.id,
+          "question": question.question,
+          "note": question.note,
+          "sub_topic_id": 1,
+          "type": question.type,
+          "level": 1
+        });
+      }
+
+    } else {
+      this.route.params.subscribe(params => {
+        let encryptedData = params['id'];
+        let qid = params['qid'];
+        let report_id = params['report_id'];
+        if (encryptedData) {
+          try {
+            this.questions = [];
+            this.router.navigate(['/question', encryptedData, 1, report_id]);
+          } catch (error) {
+            console.error('Error decrypting data:', error);
+          }
+        }
+      });
+      // let next_id = this.questionsIds[this.noofquestions + 1]
+      // this.mySubscription = this.service.get_question(next_id).subscribe(
+      //   response => {
+      //     let x = response;
+      //     if (x.status == "SUCCESS") {
+      //       this.questions = [];
+      //       this.questions.push(x.data);
+      //     }
+      //   },
+      //   error => {
+      //     console.error('Error fetching questions:', error);
+      //   }
+      // );
+    }
   }
   formatAnswer(type: string, answer: string): any {
     if (type === 'ui' || type === 'co') {

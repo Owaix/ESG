@@ -1,6 +1,6 @@
 <div class="card-container">
     <div class="card" *ngFor="let card of cards">
-        <a [routerLink]="['/subtopics', card.id]" class="card-link"> 
+        <a [routerLink]="['/subtopics', card.id , report_id]" class="card-link">
             <div class="card-content">
                 <img src="assets/images/firefox.png" alt="{{ card.title }}" class="card-image">
                 <h3>{{ card.name }}</h3>

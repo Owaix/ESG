@@ -25,56 +25,35 @@ export class ApiService {
         return this.http.get(environment.BASE_URL + 'company/categories');
     }
     GetProfile(): Observable<any> {
-        const token = this.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.get(environment.BASE_URL + 'company/categories', { headers });
+        return this.http.get(environment.BASE_URL + 'company/categories');
     }
     get_profile(): Observable<any> {
-        const token = this.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.get(environment.BASE_URL + 'company/profile', { headers });
+        return this.http.get(environment.BASE_URL + 'company/profile');
     }
     get_topics(): Observable<any> {
-        const token = this.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.get(environment.BASE_URL + 'topic/list', { headers });
+        return this.http.get(environment.BASE_URL + 'topic/list');
     }
     get_subtopics(id: number): Observable<any> {
-        const token = this.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.get(environment.BASE_URL + 'topic/subtopics/' + id, { headers });
+        return this.http.get(environment.BASE_URL + 'topic/subtopics/' + id);
     }
 
     get_question(id: string, report_id: string): Observable<any> {
-        const token = this.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.get(environment.BASE_URL + 'topic/question/' + id + '/report/' + report_id, { headers });
+        return this.http.get(environment.BASE_URL + 'topic/question/' + id + '/report/' + report_id);
     }
 
     get_questions(numberOfCalls: string[]): Observable<any[]> {
-        const token = this.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
         const apiCalls: Observable<any>[] = [];
         for (let i = 0; i < numberOfCalls.length; i++) {
-            apiCalls.push(this.http.get(environment.BASE_URL + 'topic/question/' + numberOfCalls[i], { headers }));
+            apiCalls.push(this.http.get(environment.BASE_URL + 'topic/question/' + numberOfCalls[i]));
         }
         return forkJoin(apiCalls);
     }
 
     SaveQuestions(user: any): Observable<any> {
-        const token = this.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.post(environment.BASE_URL + 'report/answer', user, { headers });
+        return this.http.post(environment.BASE_URL + 'report/answer', user);
     }
 
     update_profile(user: User): Observable<any> {
-        const token = this.getToken();
-        user.token = token;
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        return this.http.put(environment.BASE_URL + 'users/update_profile', user, { headers });
-    }
-    private getToken(): string {
-        return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55X2lkIjoyLCJpYXQiOjE3Mjk5MzU5MDEsImV4cCI6MTczMjUyNzkwMX0.CkTBL14P2ki5AmBZ-XNg9hPi6Vii2Cv_MzMBDHlad6Y";
-        return localStorage.getItem('token') || "";
+        return this.http.put(environment.BASE_URL + 'users/update_profile', user);
     }
 }

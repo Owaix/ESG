@@ -8,7 +8,7 @@ import { EncryptionService } from 'src/app/service/encrypt.service';
 @Component({
   selector: 'app-topics',
   templateUrl: './topics.component.html',
-  styleUrls: ['./topics.component.css']
+  styleUrls: ['./topics.component.scss']
 })
 
 export class TopicsComponent {
@@ -21,14 +21,20 @@ export class TopicsComponent {
     private dataservice: DataService,
     private encrypt: EncryptionService,
     private router: Router) { }
+
   ngOnInit(): void {
     this.mySubscription = this.service.get_topics().subscribe(x => {
       if (x.status == "SUCCESS") {
         this.cards = x.data.topics;
+        console.log(this.cards);
         this.report_id = this.encrypt.encrypt(x.data.report_id.toString());
         this.dataservice.createHeader(x.data.report_ref_no);
       }
     })
+  }
+
+  subtopics(id: number) {
+    this.router.navigate(['/subtopics', id, this.report_id]);
   }
 
   ngOnDestroy() {

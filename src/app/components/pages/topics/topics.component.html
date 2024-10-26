@@ -1,4 +1,18 @@
-<div class="card-container">
+<div class="container">
+    <div *ngFor="let card of cards" class="responsive-div">
+        <div class="topic-box">
+            <h3>{{ card.name }}</h3>
+            <p>{{ card.name }}</p>
+        </div>
+        <div class="status">
+            <span>Status: {{ card.status }}</span>
+        </div>
+        <button (click)="subtopics(card.id)" class="edit-button">Edit</button>
+    </div>
+    <button (click)="subtopics(1)" class="edit-button">Submit</button>
+</div>
+
+<!-- <div class="card-container">
     <div class="card" *ngFor="let card of cards">
         <a [routerLink]="['/subtopics', card.id , report_id]" class="card-link">
             <div class="card-content">
@@ -8,4 +22,4 @@
             </div>
         </a>
     </div>
-</div>
+</div> -->

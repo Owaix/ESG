@@ -1,68 +1,94 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90%; // Adjusted for more flexible width on smaller screens
+    margin: 0 auto;
+    padding: 1rem;
+
+    @media (min-width: 1024px) {
+        max-width: 800px; // Set max-width for larger screens
+    }
+}
+
 .content {
-    padding: 20px; // Add padding around the content
-    max-width: 800px; // Set a max width for larger screens
-    margin: 0 auto; // Center the content
+    padding: 1rem;
+    width: 100%; // Use full width within container
+    max-width: 800px;
+    margin: 0 auto;
 
     .responsive-title {
-        font-size: 2.5rem; // Base size for large screens
-        margin: 0 0 10px; // Margin below the title
-        text-align: center; // Center the title text
+        font-size: 2.5rem;
+        margin: 0 0 10px;
+        text-align: center;
     }
 
     .responsive-description {
-        font-size: 1.2rem; // Base size for large screens
-        margin: 0 0 20px; // Margin below the description
-        text-align: center; // Center the description text
+        font-size: 1.2rem;
+        margin: 0 0 20px;
+        text-align: center;
     }
 
     @media (max-width: 768px) {
-
-        // For tablets and smaller screens
         .responsive-title {
-            font-size: 2rem; // Adjust font size for smaller screens
+            font-size: 2rem;
         }
 
         .responsive-description {
-            font-size: 1rem; // Adjust font size for smaller screens
+            font-size: 1rem;
         }
     }
 
     @media (max-width: 480px) {
-
-        // For mobile screens
         .responsive-title {
-            font-size: 1.5rem; // Further adjust for mobile
+            font-size: 1.5rem;
         }
 
         .responsive-description {
-            font-size: 0.9rem; // Further adjust for mobile
+            font-size: 0.9rem;
         }
     }
 }
 
 .tile-container {
-    display: inline-grid; // Use flexbox for tile layout
-    overflow-x: auto; // Allow horizontal scrolling
-    padding: 10px; // Padding around the tile container
-    gap: 10px; // Space between bars
-    white-space: nowrap; // Prevent bars from wrapping
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center; // Center align items across screen sizes
+    overflow-x: auto;
 
     .bar {
-        background-color: #f0f0f0; // Background color for bars
-        border: 1px solid #ccc; // Border for bars
-        border-radius: 5px; // Rounded corners
-        padding: 10px 20px; // Padding inside each bar
-        cursor: pointer; // Change cursor on hover
-        transition: background-color 0.3s, transform 0.3s; // Smooth transitions for hover effect
-        display: inline-block; // Keep bars inline
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        display: inline-block;
+        min-width: 150px; // Set min width for readability
+        max-width: 100%; // Scale with container
 
         &:hover {
-            background-color: #d9d9d9; // Change background on hover
-            transform: scale(1.05); // Slightly enlarge on hover
+            background-color: #d9d9d9;
+            transform: scale(1.05);
         }
 
         .bar-label {
-            font-weight: bold; // Make the label bold
+            font-weight: bold;
+            text-align: center; // Center-align text within each tile
+        }
+    }
+
+    @media (min-width: 768px) {
+        .bar {
+            flex: 1 1 calc(50% - 20px); // 2 bars per row on medium screens
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .bar {
+            flex: 1 1 calc(25% - 20px); // 4 bars per row on large screens
         }
     }
 }

@@ -9,8 +9,10 @@
   <a routerLink="" fragment="reason">PRODUCT</a>
   <a routerLink="" fragment="articles">PRICING</a>
   <a routerLink="" fragment="articles">CONTACT US</a>
-  <a style="color: white" routerLink="/signup" class="links">SIGN UP</a>
-  <a style="color: white" routerLink="/login" class="links">LOG IN</a>
+  <a *ngIf="isLoggedIn;" routerLink="/topics">MY ACCOUNT</a>
+  <a *ngIf="!isLoggedIn;" style="color: white" routerLink="/signup" class="links">SIGN UP</a>
+  <a *ngIf="!isLoggedIn;" style="color: white" routerLink="/login" class="links">LOG IN</a>
+  <a *ngIf="isLoggedIn;" (click)="logout()" style="color: white" href="#" class="links">LOG OUT</a>
 </nav>
 <!-- <ng-container *ngIf="isLoggedIn; else loggedOutTemplate">
   <div class="user-info">

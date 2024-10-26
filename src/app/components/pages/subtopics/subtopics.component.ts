@@ -33,8 +33,11 @@ export class SubtopicsComponent {
   }
 
   showQues(id: number[]) {
-    let decryptedArray = this.encrypt.encrypt(id.join(','));
-    this.router.navigate(['/question', decryptedArray, 0, this.report_id]);
+    if (id.length > 0) {
+      let qid = id[0];
+      let encryptedArray = this.encrypt.encrypt(id.join(','));
+      this.router.navigate(['/question', encryptedArray, qid, this.report_id]);
+    }
   }
 
   ngOnDestroy() {

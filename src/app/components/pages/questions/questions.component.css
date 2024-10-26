@@ -98,10 +98,13 @@ button:hover {
   align-items: center;
   margin-bottom: 10px;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .custom-checkbox input[type="checkbox"] {
-  display: none; /* Hide the default checkbox */
+  display: none;
+  /* Hide the default checkbox */
 }
 
 .custom-checkbox .checkbox {
@@ -112,7 +115,8 @@ button:hover {
   display: inline-block;
   position: relative;
   margin-right: 10px;
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 4px;
+  /* Rounded corners */
   transition: background-color 0.2s ease;
 }
 
@@ -131,10 +135,10 @@ button:hover {
 }
 
 /* Checked state: Show checkmark */
-.custom-checkbox input[type="checkbox"]:checked + .checkbox {
+.custom-checkbox input[type="checkbox"]:checked+.checkbox {
   background-color: #007BFF;
 }
 
-.custom-checkbox input[type="checkbox"]:checked + .checkbox::after {
+.custom-checkbox input[type="checkbox"]:checked+.checkbox::after {
   transform: translate(-50%, -50%) rotate(45deg) scale(1);
 }

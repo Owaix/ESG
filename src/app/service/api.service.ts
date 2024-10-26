@@ -74,6 +74,7 @@ export class ApiService {
         return this.http.put(environment.BASE_URL + 'users/update_profile', user, { headers });
     }
     private getToken(): string {
+        return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55X2lkIjoyLCJpYXQiOjE3Mjk5MzU5MDEsImV4cCI6MTczMjUyNzkwMX0.CkTBL14P2ki5AmBZ-XNg9hPi6Vii2Cv_MzMBDHlad6Y";
         return localStorage.getItem('token') || "";
     }
 }

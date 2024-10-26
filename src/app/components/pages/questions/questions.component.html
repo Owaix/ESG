@@ -2,6 +2,8 @@
   <form (ngSubmit)="saveResponses()">
     <div style="text-align: left;" class="question-item">
       <input type="hidden" id="report_id" [(ngModel)]="answers.report_id" name="report_id" />
+      <label>{{ question_no }}</label>
+      <br>
       <label [for]="'question'">{{ question.question }}</label>
       <div *ngIf="question.type == 'co'" style="margin-top: 10px;margin-left: 10px;">
         <label *ngFor="let option of question.options;" class="custom-radio">
@@ -11,16 +13,19 @@
         </label>
       </div>
       <div *ngIf="question.type == 'cm'" style="margin-top: 10px;margin-left: 10px;">
-        <label *ngFor="let ans of question.answers;" class="custom-checkbox">
-          <input type="checkbox" name="checkbox" checked>
+        <label *ngFor="let option of question.options;" class="custom-checkbox">
+          <input [checked]="isChecked(option.id)" (change)="changeSelection($event, option)" type="checkbox"
+            name="checkbox" [id]="option.id">
           <span class="checkbox"></span>
-          Option 1
+          {{option.answer}}
         </label>
       </div>
+
       <input *ngIf="question.type == 'ui'" type="text" [id]="" [(ngModel)]="answers.answer" name="answer" required />
     </div>
     <div style="text-align: left; ">
       <button style="width: 10%;" type="submit">Next</button>
     </div>
+    <p style="color: red;text-align: justify;font-family: 'Laila-Bold';font-weight: 700;">{{error}}</p>
   </form>
 </div>

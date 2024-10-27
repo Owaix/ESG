@@ -17,6 +17,7 @@ import { TopicsComponent } from './pages/topics/topics.component';
 import { SubtopicsComponent } from './pages/subtopics/subtopics.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
 import { EncryptionService } from "../service/encrypt.service";
+import { ModalComponent } from './shared/modal/modal.component';
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
@@ -51,7 +52,8 @@ const routerOptions: ExtraOptions = {
     EmailVerificationComponent,
     TopicsComponent,
     SubtopicsComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    ModalComponent
   ],
   providers: [ApiService, AuthService, EncryptionService],
   exports: [

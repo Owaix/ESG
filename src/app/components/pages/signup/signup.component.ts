@@ -16,6 +16,7 @@ export class SignupComponent implements OnInit {
   typeList: CategoryType[] = [];
   sectorList: CategorySector[] = [];
   errormsg = '';
+  errortitle = 'ALERT';
   categories: Category[] = []
 
   constructor(private service: ApiService, private router: Router) { }
@@ -34,8 +35,10 @@ export class SignupComponent implements OnInit {
         catchError(err => {
           if (err.status === 400) {
             this.errormsg = err.error.message;
+            this.openModal();
           } else {
-            this.errormsg = 'An error occurred. Please try again later.';
+            this.errormsg = err.error.message;
+            this.openModal();
           }
           return throwError(() => new Error(err));
         })
@@ -68,6 +71,15 @@ export class SignupComponent implements OnInit {
     if (this.mySubscription) {
       this.mySubscription.unsubscribe();
     }
+  }
+
+  isModalOpen = false;
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 
   get passwordMismatch() {

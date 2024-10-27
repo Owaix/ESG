@@ -25,9 +25,12 @@
                         Password must contain at least one number, one special character, and one letter
                     </div>
                 </div>
-                <p style="color:red;">{{errormsg}}</p>
                 <button type="submit" class="links" [disabled]="loginForm.invalid">Log in</button>
             </form>
         </div>
     </div>
 </section>
+<app-modal *ngIf="isModalOpen" (close)="closeModal()">
+    <h2>{{errortitle}}</h2>
+    <p>{{errormsg}}</p>
+</app-modal>

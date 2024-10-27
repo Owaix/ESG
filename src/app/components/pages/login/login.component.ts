@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   private mySubscription: Subscription | null = null;  // Initialized as null
   constructor(private service: ApiService, private authService: AuthService, private router: Router) { }
   errormsg = '';
+  errortitle = 'ALERT';
   ngOnInit(): void {
 
   }
@@ -24,10 +25,12 @@ export class LoginComponent implements OnInit {
     if (this.users.email && this.users.password) {
       this.mySubscription = this.service.login(this.users).pipe(
         catchError(err => {
-          if (err.status === 401) {
+          if (err.status === 400) {
             this.errormsg = err.error.message;
+            this.openModal();
           } else {
-            this.errormsg = 'An error occurred. Please try again later.';
+            this.errormsg = err.error.message;
+            this.openModal();
           }
           return throwError(() => new Error(err));
         })
@@ -50,6 +53,15 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+  }
+
+  isModalOpen = false;
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 
   ngOnDestroy() {

@@ -59,7 +59,8 @@
     overflow-x: auto;
 
     .bar {
-        background-color: #f0f0f0;
+        background-color: #295263;
+        opacity: 0.9;
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 10px 20px;
@@ -70,12 +71,13 @@
         max-width: 100%; // Scale with container
 
         &:hover {
-            background-color: #d9d9d9;
+            background-color: #466977;
             transform: scale(1.05);
         }
 
         .bar-label {
             font-weight: bold;
+            color: white;
             text-align: center; // Center-align text within each tile
         }
     }

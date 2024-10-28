@@ -192,3 +192,34 @@ section
           margin-top: 1.5rem
           grid-template-columns: auto
           gap: 1.5rem
+
+
+$dark-blue: var(--dark-blue) // Define your color variable
+$cross-color: var(--dark-blue) // Color of the crossing line
+$line-height: 2px // Thickness of the line
+$line-length: 120% // Length of the crossing line (adjust as needed)
+
+.price-container
+  position: relative
+  display: inline-block // Allows positioning of the pseudo-element
+
+  .price
+    font-size: 43px
+    font-weight: bold
+    font-family: 'Laila-Bold' !important
+    color: $dark-blue
+    position: relative // Position relative for the pseudo-element
+    z-index: 2 // Ensure the text appears above the line
+
+    &::after
+      content: '' // Empty content for the line
+      position: absolute
+      top: 50% // Center vertically
+      left: 50% // Start from the center horizontally
+      width: $line-length // Set the width to increase the line length
+      height: $line-height // Thickness of the line
+      background-color: $cross-color // Color of the crossing line
+      transform: rotate(349deg) // Rotate the line to 135 degrees
+      transform-origin: center // Rotate around its center
+      z-index: 1 // Make sure the line appears below the text
+      margin-left: -50% // Center the line by moving left by half its width

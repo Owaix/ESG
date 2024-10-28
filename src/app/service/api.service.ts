@@ -41,6 +41,10 @@ export class ApiService {
         return this.http.get(environment.BASE_URL + 'topic/question/' + id + '/report/' + report_id);
     }
 
+    verify(token: any): Observable<any> {
+        return this.http.post(environment.BASE_URL + 'auth/verify', token);
+    }
+
     get_questions(numberOfCalls: string[]): Observable<any[]> {
         const apiCalls: Observable<any>[] = [];
         for (let i = 0; i < numberOfCalls.length; i++) {

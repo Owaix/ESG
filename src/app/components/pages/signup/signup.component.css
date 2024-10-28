@@ -76,3 +76,62 @@ select:disabled {
 select:focus-visible {
     outline: none;
 }
+
+/* Responsive adjustments for tablets and smaller screens */
+@media (max-width: 600px) {
+    .login-container {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    select {
+        width: 102%;
+    }
+
+    .error {
+        font-size: 12px;
+    }
+}
+
+/* Additional adjustments for mobile screens (under 400px) */
+@media (max-width: 400px) {
+    .login-container {
+        padding: 5px;
+        max-width: 90%;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 10px;
+        width: 95%;
+    }
+
+    label {
+        font-size: 0.9em;
+    }
+
+    button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    select {
+        width: 102%;
+    }
+
+    .error {
+        font-size: 12px;
+    }
+}

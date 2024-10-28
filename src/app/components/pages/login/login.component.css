@@ -26,9 +26,8 @@ input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
   border-radius: 35px;
+  font-size: 16px;
 }
 
 input:focus {
@@ -47,4 +46,55 @@ button:hover:not(:disabled) {
 .error {
   color: red;
   font-size: 14px;
+}
+
+/* Responsive adjustments for tablets and smaller screens */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .error {
+    font-size: 12px;
+  }
+}
+
+/* Additional adjustments for mobile screens (under 400px) */
+@media (max-width: 400px) {
+  .login-container {
+    padding: 5px;
+    max-width: 90%;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  input {
+    font-size: 14px;
+    padding: 10px;
+    width: 95%;
+  }
+
+  label {
+    font-size: 0.9em;
+  }
+
+  button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .error {
+    font-size: 12px;
+  }
 }

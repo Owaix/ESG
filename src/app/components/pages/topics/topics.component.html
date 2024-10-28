@@ -13,6 +13,10 @@
                 <img style="width: 24px;" src="../../../../assets/images/hold.png" alt="Process Icon">
                 <span style="color: #e0aa33;"> {{ card.status }}</span>
             </span>
+            <span *ngIf="card.status == 'Done'" class="status-inline">
+                <img style="width: 24px;" src="../../../../assets/images/complete.png" alt="Process Icon">
+                <span style="color: #86bd86;"> {{ card.status }}</span>
+            </span>
         </div>
         <button (click)="subtopics(card.id)" class="edit-button">Edit</button>
     </div>

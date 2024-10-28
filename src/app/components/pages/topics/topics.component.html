@@ -5,7 +5,10 @@
             <p>{{ card.name }}</p>
         </div>
         <div class="status">
-            <span>Status: {{ card.status }}</span>
+            <span *ngIf="card.status == 'Pending'" class="status-inline">
+                <img style="width: 24px;" src="../../../../assets/images/process.png" alt="Process Icon">
+                <span style="color: #5f5fb6;"> {{ card.status }}</span>
+            </span>
         </div>
         <button (click)="subtopics(card.id)" class="edit-button">Edit</button>
     </div>

@@ -7,6 +7,14 @@
   padding: 1rem;
 }
 
+.status-inline {
+  display: inline-flex; /* or simply inline */
+  align-items: center; /* Center align items vertically */
+}
+.status-inline img {
+  margin-right: 0.5rem; /* Optional: Add space between the image and the text */
+}
+
 .responsive-div {
   width: 90%; // Make each div take the full width of the container
   display: flex;
@@ -51,7 +59,7 @@
     flex: 0.5;
     padding: 0.5rem 1rem;
     border: none;
-    background-color: #1976d2;
+    background-color: #295263;
     color: #fff;
     border-radius: 4px;
     cursor: pointer;

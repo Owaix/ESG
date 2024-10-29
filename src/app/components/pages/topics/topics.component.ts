@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
+import { LoaderService } from 'src/app/service/loader.service';
 
 @Component({
   selector: 'app-topics',
@@ -19,10 +20,12 @@ export class TopicsComponent {
   constructor(
     private service: ApiService,
     private dataservice: DataService,
+    private loaderService: LoaderService,
     private encrypt: EncryptionService,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.mySubscription = this.service.get_topics().subscribe(x => {
       if (x.status == "SUCCESS") {
         this.cards = x.data.topics;
@@ -30,6 +33,7 @@ export class TopicsComponent {
         this.report_id = this.encrypt.encrypt(x.data.report_id.toString());
         this.dataservice.createHeader(x.data.report_ref_no);
       }
+      this.loaderService.hide();
     })
   }
 

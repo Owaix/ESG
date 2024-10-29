@@ -18,6 +18,7 @@ import { SubtopicsComponent } from './pages/subtopics/subtopics.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
 import { EncryptionService } from "../service/encrypt.service";
 import { ModalComponent } from './shared/modal/modal.component';
+import { LoaderComponent } from './shared/loader/loader/loader.component';
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent

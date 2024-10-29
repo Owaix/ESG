@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
+import { LoaderService } from 'src/app/service/loader.service';
 
 @Component({
   selector: 'app-questions',
@@ -28,11 +29,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   constructor(private encrypt: EncryptionService,
     private service: ApiService,
     private dataservice: DataService,
+    private loaderService: LoaderService,
     private router: Router,
     private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.route.params.subscribe(params => {
       this.encryptedData = params['id'];
       let qid = params['qid'];
@@ -50,6 +53,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           this.mySubscription = this.service.get_question(qid, reportid).subscribe(
             response => {
               let x = response;
+              this.loaderService.hide();
               if (x.status == "SUCCESS") {
                 this.question = x.data;
                 this.answers.answer = this.question.user_answer;
@@ -57,6 +61,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               console.log(x);
             },
             error => {
+              this.loaderService.hide();
               console.error('Error fetching questions:', error);
             }
           );

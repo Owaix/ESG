@@ -8,6 +8,7 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { VerifyComponent } from './components/pages/verify/verify.component';
 import { CommonModule } from '@angular/common';
 import { EmailVerificationComponent } from './components/pages/email-verification/email-verification.component';
+import { LoaderComponent } from './components/shared/loader/loader/loader.component';
 
 const routes: Routes = [
   { path: 'verify', component: VerifyComponent },
@@ -23,7 +24,8 @@ const routerOptions: ExtraOptions = {
 @NgModule({
   declarations: [
     AppComponent,
-    VerifyComponent
+    VerifyComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

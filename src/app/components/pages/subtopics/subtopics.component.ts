@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
+import { LoaderService } from 'src/app/service/loader.service';
 
 @Component({
   selector: 'app-subtopics',
@@ -17,8 +18,11 @@ export class SubtopicsComponent {
   description: string = "";
   report_id: string = "";
 
-  constructor(private encrypt: EncryptionService, private service: ApiService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private loaderService: LoaderService,
+    private encrypt: EncryptionService, private service: ApiService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
+    this.loaderService.show();
     this.route.params.subscribe(params => {
       let id = +params['id']; // Convert to number
       this.report_id = params['report_id'];
@@ -28,6 +32,7 @@ export class SubtopicsComponent {
           this.description = x.data.description;
           this.name = x.data.name;
         }
+        this.loaderService.hide();
       })
     });
   }

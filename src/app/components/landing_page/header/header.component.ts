@@ -14,7 +14,7 @@ export class Header {
   userEmail: string | null = null;
   navigations = ['Home', 'About', 'Contact', 'Blog', 'Careers'];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private elRef: ElementRef) { }
 
   ngOnInit() {
     // Subscribe to authentication status
@@ -47,5 +47,16 @@ export class Header {
       this.close.nativeElement.style.display = '';
     }
   }
-
+  onClickOutside(event: Event) {
+    if (this.nav?.nativeElement.classList.contains('active') &&
+      !this.elRef.nativeElement.contains(event.target)) {
+      this.closeMenu();
+    }
+  }
+  ngAfterViewInit() {
+    document.addEventListener('click', this.onClickOutside.bind(this));
+  }
+  onNavItemClick() {
+    this.closeMenu();
+  }
 }

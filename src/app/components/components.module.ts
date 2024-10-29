@@ -23,7 +23,6 @@ const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'everif', component: EmailVerificationComponent },
   { path: 'topics', component: TopicsComponent },
   { path: 'subtopics/:id/:report_id', component: SubtopicsComponent },
   { path: 'question/:id/:qid/:report_id', component: QuestionsComponent }

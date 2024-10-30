@@ -15,6 +15,7 @@ export class SubtopicsComponent {
   private mySubscription: Subscription | null = null;  // Initialized as null
   cards: any[] = [];
   name: string = "";
+  topic_id: number = 0;
   description: string = "";
   report_id: string = "";
 
@@ -24,9 +25,9 @@ export class SubtopicsComponent {
   ngOnInit(): void {
     this.loaderService.show();
     this.route.params.subscribe(params => {
-      let id = +params['id']; // Convert to number
+      this.topic_id = +params['id']; // Convert to number
       this.report_id = params['report_id'];
-      this.mySubscription = this.service.get_subtopics(id).subscribe(x => {
+      this.mySubscription = this.service.get_subtopics(this.topic_id).subscribe(x => {
         if (x.status == "SUCCESS") {
           this.cards = x.data.subtopics;
           this.description = x.data.description;
@@ -41,7 +42,8 @@ export class SubtopicsComponent {
     if (id.length > 0) {
       let qid = id[0];
       let encryptedArray = this.encrypt.encrypt(id.join(','));
-      this.router.navigate(['/question', encryptedArray, qid, this.report_id]);
+      console.log('/question', encryptedArray, qid, this.report_id, this.topic_id);
+      this.router.navigate(['/question', encryptedArray, qid, this.report_id, this.topic_id]);
     }
   }
 

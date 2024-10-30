@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { catchError, Subscription, throwError } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
@@ -20,7 +20,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   totalquestions: number = 0;
   questionsIds: string[] = [];
   encryptedData: string = "";
-  isComplete = false;
+  isComplete = true;
+  topic_id: string = "";
   report_id: string = "";
   error: string = "";
   question_no: string = ""
@@ -41,11 +42,18 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       this.encryptedData = params['id'];
       let qid = params['qid'];
       this.report_id = params['report_id'];
+      this.topic_id = params['topic_id'];
       if (this.encryptedData) {
         try {
           let decryptedArray = this.encrypt.decrypt(this.encryptedData);
           let reportid = this.encrypt.decrypt(this.report_id);
           this.questionsIds = decryptedArray.split(',');
+
+          let Question = this.getNextValue(this.questionsIds, qid.toString());
+          if (Question == null) {
+            this.isComplete = false;
+          }
+
           console.log(this.questionsIds);
           this.answers.question_id = parseInt(qid);
           let no = this.questionsIds.indexOf(qid) + 1;
@@ -99,7 +107,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     } else {
       this.error = "";
       this.mySubscription = this.service.SaveQuestions(this.answers).subscribe(x => {
-        if (x.status == "SUCCESS") {          
+        if (x.status == "SUCCESS") {
           if (this.question.type == "co") {
             let options = this.question.options.find((x: { id: string; }) => x.id == this.answers.answer);
             let result = this.questionsIds.filter(num => num > this.answers.question_id.toString());
@@ -112,14 +120,26 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               result = incomingValues.concat(result);
             }
             let encryptArray = this.encrypt.encrypt(result.join(','));
-            this.router.navigate(['/question', encryptArray, result[0], this.report_id]);
+            this.router.navigate(['/question', encryptArray, result[0], this.report_id, this.topic_id]);
           } else if (this.question.type == "ui") {
-            //this.router.navigate(['/question', encryptArray, result[0], this.report_id]);
+            console.log(this.answers.question_id);
+            console.log(this.questionsIds);
+            let qid = this.getNextValue(this.questionsIds, this.answers.question_id.toString());
+            this.router.navigate(['/question', this.encryptedData, qid, this.report_id, this.topic_id]);
           }
         } else {
           alert("Answer cannot be empty! Please select an answer!")
         }
       })
+    }
+  }
+
+  getNextValue(arr: string[], currentValue: string) {
+    const index = arr.indexOf(currentValue);
+    if (index !== -1 && index < arr.length - 1) {
+      return arr[index + 1];
+    } else {
+      return null;
     }
   }
 
@@ -141,13 +161,35 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   complete() {
     let obj = {
-      report_id: this.answers.report_id
+      "report_id": this.answers.report_id,
+      "topic_id": this.topic_id
     }
-    this.mySubscription = this.service.complete_report(obj).subscribe(x => {
-      if (x.status == "SUCCESS") {
 
+    this.mySubscription = this.service.complete_report(obj).pipe(
+      catchError(err => {
+        if (err.status === 422) {
+          this.error = err.error.message;
+          this.openModal();
+        } else {
+          this.error = err.error.message;
+          this.openModal();
+        }
+        return throwError(() => new Error(err));
+      })
+    ).subscribe(
+      response => {
+        if (response.status == "SUCCESS") {
+          this.error = '';
+          console.log(response);
+        }
+      },
+      error => {
+        console.log('Error:', error);
       }
-    })
+    );
+  }
+  openModal() {
+    throw new Error('Method not implemented.');
   }
 }
 

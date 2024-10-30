@@ -6,7 +6,7 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root'
 })
 export class EncryptionService {
-  private secretKey: string = '2b60a5c2e7d39e8f';
+  private secretKey: string = 'A$d@!23';
   encrypt(data: string): string {
     return CryptoJS.AES.encrypt(data, this.secretKey).toString();
   }

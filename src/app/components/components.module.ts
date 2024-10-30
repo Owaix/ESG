@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'topics', component: TopicsComponent },
   { path: 'subtopics/:id/:report_id', component: SubtopicsComponent },
-  { path: 'question/:id/:qid/:report_id', component: QuestionsComponent }
+  { path: 'question/:id/:qid/:report_id/:topic_id', component: QuestionsComponent }
 ];
 
 const routerOptions: ExtraOptions = {

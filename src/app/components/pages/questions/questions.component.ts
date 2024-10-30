@@ -164,32 +164,27 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       "report_id": this.answers.report_id,
       "topic_id": this.topic_id
     }
-
+    console.log(obj);
     this.mySubscription = this.service.complete_report(obj).pipe(
       catchError(err => {
         if (err.status === 422) {
           this.error = err.error.message;
-          this.openModal();
         } else {
           this.error = err.error.message;
-          this.openModal();
         }
-        return throwError(() => new Error(err));
+        return throwError(() => console.log(err));
       })
-    ).subscribe(
-      response => {
-        if (response.status == "SUCCESS") {
+    ).subscribe({
+      next: (response) => {
+        if (response.status === "SUCCESS") {
           this.error = '';
           console.log(response);
         }
       },
-      error => {
+      error: (error) => {
         console.log('Error:', error);
       }
-    );
-  }
-  openModal() {
-    throw new Error('Method not implemented.');
+    })
   }
 }
 

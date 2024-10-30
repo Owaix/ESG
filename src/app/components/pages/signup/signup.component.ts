@@ -16,6 +16,8 @@ export class SignupComponent implements OnInit {
   typeList: CategoryType[] = [];
   sectorList: CategorySector[] = [];
   errormsg = '';
+  showPassword = false;
+  showCnfrmPassword = false;
   errortitle = 'ALERT';
   categories: Category[] = []
 

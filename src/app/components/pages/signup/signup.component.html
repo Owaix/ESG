@@ -67,9 +67,20 @@
             </div>
             <div class="input-group">
                 <label for="password">Create Password</label>
-                <input type="password" id="password" name="password" [(ngModel)]="users.password" required
-                    [ngClass]="{'is-invalid': passwordField.invalid && passwordField.touched}" minlength="6"
-                    #passwordField="ngModel" pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,}" />
+                <div style="position: relative;">
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
+                        [(ngModel)]="users.password" required
+                        [ngClass]="{'is-invalid': passwordField.invalid && passwordField.touched}" minlength="6"
+                        #passwordField="ngModel" pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,}" />
+                    <button type="button" (click)="showPassword = !showPassword"
+                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+                        <img style="width: 31px;margin-right: -78px;" *ngIf="showPassword"
+                            src="../../../../assets/images/hidden.png" alt="Hide password">
+                        <img style="width: 31px;margin-right: -78px;" *ngIf="!showPassword"
+                            src="../../../../assets/images/eye.png" alt="Show password">
+                    </button>
+                </div>
+
                 <div *ngIf="passwordField.errors?.['minlength'] && passwordField.touched" class="error">
                     Password must be at least 6 characters long
                 </div>
@@ -80,10 +91,20 @@
 
             <div class="input-group">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password"
-                    [(ngModel)]="users.confirm_password" required minlength="6"
-                    [ngClass]="{'is-invalid': confirm_passwordField.invalid && confirm_passwordField.touched}"
-                    #confirm_passwordField="ngModel" />
+                <div style="position: relative;">
+                    <input [type]="showCnfrmPassword ? 'text' : 'password'" id="confirm_password"
+                        name="confirm_password" [(ngModel)]="users.confirm_password" required
+                        [ngClass]="{'is-invalid': confirm_passwordField.invalid && confirm_passwordField.touched}"
+                        minlength="6" #confirm_passwordField="ngModel"
+                        pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,}" />
+                    <button type="button" (click)="showCnfrmPassword = !showCnfrmPassword"
+                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+                        <img style="width: 31px;margin-right: -78px;" *ngIf="showCnfrmPassword"
+                            src="../../../../assets/images/hidden.png" alt="Hide password">
+                        <img style="width: 31px;margin-right: -78px;" *ngIf="!showCnfrmPassword"
+                            src="../../../../assets/images/eye.png" alt="Show password">
+                    </button>
+                </div>
                 <div *ngIf="confirm_passwordField.errors?.['minlength'] && confirm_passwordField.touched" class="error">
                     Password must be at least 6 characters long
                 </div>

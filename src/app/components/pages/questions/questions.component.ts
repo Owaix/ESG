@@ -20,6 +20,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   totalquestions: number = 0;
   questionsIds: string[] = [];
   encryptedData: string = "";
+  isComplete = false;
   report_id: string = "";
   error: string = "";
   question_no: string = ""
@@ -89,7 +90,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   saveResponses(): void {
     console.log(this.answers);
-    if (this.answers.answer == null) {
+    if (false) {
       if (this.question.type == "ui") {
         this.error = "Please write an answer to the question";
       } else {
@@ -98,7 +99,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     } else {
       this.error = "";
       this.mySubscription = this.service.SaveQuestions(this.answers).subscribe(x => {
-        if (x.status == "SUCCESS") {
+        if (x.status == "SUCCESS") {          
           if (this.question.type == "co") {
             let options = this.question.options.find((x: { id: string; }) => x.id == this.answers.answer);
             let result = this.questionsIds.filter(num => num > this.answers.question_id.toString());
@@ -112,6 +113,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
             }
             let encryptArray = this.encrypt.encrypt(result.join(','));
             this.router.navigate(['/question', encryptArray, result[0], this.report_id]);
+          } else if (this.question.type == "ui") {
+            //this.router.navigate(['/question', encryptArray, result[0], this.report_id]);
           }
         } else {
           alert("Answer cannot be empty! Please select an answer!")
@@ -134,6 +137,17 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       return answer !== '' ? `[${answer.split(',').map(x => x.trim())}]` : null;
     }
     return null;
+  }
+
+  complete() {
+    let obj = {
+      report_id: this.answers.report_id
+    }
+    this.mySubscription = this.service.complete_report(obj).subscribe(x => {
+      if (x.status == "SUCCESS") {
+
+      }
+    })
   }
 }
 

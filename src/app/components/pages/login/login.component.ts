@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   private mySubscription: Subscription | null = null;  // Initialized as null
   constructor(private service: ApiService, private authService: AuthService, private router: Router) { }
   errormsg = '';
+  showPassword = false;
   errortitle = 'ALERT';
   ngOnInit(): void {
 

@@ -37,6 +37,15 @@ export class TopicsComponent {
     })
   }
 
+  submit() {
+    let obj = { report_id: this.report_id }
+    this.mySubscription = this.service.submit_report(obj).subscribe(x => {
+      if (x.status == "SUCCESS") {
+        alert(x);
+      }
+    })
+  }
+
   subtopics(id: number) {
     this.router.navigate(['/subtopics', id, this.report_id]);
   }

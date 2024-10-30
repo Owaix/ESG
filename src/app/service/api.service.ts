@@ -44,6 +44,15 @@ export class ApiService {
     verify(token: any): Observable<any> {
         return this.http.post(environment.BASE_URL + 'auth/verify', token);
     }
+
+    submit_report(obj: any): Observable<any> {
+        return this.http.post(environment.BASE_URL + 'report/submit', obj);
+    }
+
+    complete_report(obj: any): Observable<any> {
+        return this.http.post(environment.BASE_URL + 'report/complete', obj);
+    }
+
     re_verify(token: any): Observable<any> {
         return this.http.post(environment.BASE_URL + 'auth/resend', token);
     }

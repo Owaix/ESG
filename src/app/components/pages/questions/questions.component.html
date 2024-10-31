@@ -23,7 +23,7 @@
       <input *ngIf="question.type == 'ui'" type="text" [id]="" [(ngModel)]="answers.answer" name="answer" required />
     </div>
     <div style="text-align: right; ">
-      <button style="margin-right: 10px;" type="submit">Save</button>
+      <button style="margin-right: 10px;" type="submit">{{savebtnTitle}}</button>
       <button *ngIf="!isComplete" (click)="complete()">Complete</button>
     </div>
     <p style="color: red;text-align: justify;font-family: 'Laila-Bold';font-weight: 700;">{{error}}</p>

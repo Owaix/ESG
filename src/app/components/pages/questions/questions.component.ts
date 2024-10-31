@@ -27,6 +27,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   question_no: string = ""
   mutilChecks: string[] = [];
   answers: Answers = { answer: "", question_id: 0, report_id: 0 };
+  savebtnTitle = "Save & Next";
 
   constructor(private encrypt: EncryptionService,
     private service: ApiService,
@@ -52,6 +53,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           let Question = this.getNextValue(this.questionsIds, qid.toString());
           if (Question == null) {
             this.isComplete = false;
+            this.savebtnTitle = "Save";
           }
 
           console.log(this.questionsIds);

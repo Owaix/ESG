@@ -99,9 +99,9 @@
                         pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,}" />
                     <button type="button" (click)="showCnfrmPassword = !showCnfrmPassword"
                         style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
-                        <img style="width: 31px;margin-right: -78px;" *ngIf="showCnfrmPassword"
+                        <img class="eye" *ngIf="showCnfrmPassword"
                             src="../../../../assets/images/hidden.png" alt="Hide password">
-                        <img style="width: 31px;margin-right: -78px;" *ngIf="!showCnfrmPassword"
+                        <img class="eye" *ngIf="!showCnfrmPassword"
                             src="../../../../assets/images/eye.png" alt="Show password">
                     </button>
                 </div>

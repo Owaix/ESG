@@ -67,7 +67,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               if (x.status == "SUCCESS") {
                 this.question = x.data;
                 this.question_no = "Question " + no + " of " + this.questionsIds.length;
-                this.answers.answer = this.question.user_answer;
+                if (x.data.type = "co") {
+                  // x.data.user_answer = isNaN(x.data.user_answer) ? 0 : x.data.user_answer;
+                  x.data.user_answer = parseInt(x.data.user_answer);
+                }
+                this.answers.answer = x.data.user_answer;
               }
               console.log(x);
             },
@@ -111,6 +115,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       this.mySubscription = this.service.SaveQuestions(this.answers).subscribe(x => {
         if (x.status == "SUCCESS") {
           if (this.question.type == "co") {
+            console.log(x);
+            console.log(this.questionsIds);
             let options = this.question.options.find((x: { id: string; }) => x.id == this.answers.answer);
             let result = this.questionsIds.filter(num => num > this.answers.question_id.toString());
             let incomingValues: string[] = [];
@@ -124,8 +130,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
             let encryptArray = this.encrypt.encrypt(result.join(','));
             this.router.navigate(['/question', encryptArray, result[0], this.report_id, this.topic_id]);
           } else if (this.question.type == "ui") {
-            console.log(this.answers.question_id);
-            console.log(this.questionsIds);
             let qid = this.getNextValue(this.questionsIds, this.answers.question_id.toString());
             this.router.navigate(['/question', this.encryptedData, qid, this.report_id, this.topic_id]);
           }

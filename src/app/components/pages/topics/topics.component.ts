@@ -24,7 +24,8 @@ export class TopicsComponent {
     private dataservice: DataService,
     private loaderService: LoaderService,
     private encrypt: EncryptionService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loaderService.show();

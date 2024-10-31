@@ -39,14 +39,7 @@
     </div>
 </div>
 
-<!-- <div class="card-container">
-    <div class="card" *ngFor="let card of cards">
-        <a [routerLink]="['/subtopics', card.id , report_id]" class="card-link">
-            <div class="card-content">
-                <img src="assets/images/firefox.png" alt="{{ card.title }}" class="card-image">
-                <h3>{{ card.name }}</h3>
-                <p>{{ card.status }}</p>
-            </div>
-        </a>
-    </div>
-</div> -->
+<app-modal *ngIf="isModalOpen" (close)="closeModal()">
+    <h2>{{errortitle}}</h2>
+    <p style="font-size: 19px;">{{errormsg}}</p>
+</app-modal>

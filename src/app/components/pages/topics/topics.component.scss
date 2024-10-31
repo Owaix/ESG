@@ -8,11 +8,15 @@
 }
 
 .status-inline {
-  display: inline-flex; /* or simply inline */
-  align-items: center; /* Center align items vertically */
+  display: inline-flex;
+  /* or simply inline */
+  align-items: center;
+  /* Center align items vertically */
 }
+
 .status-inline img {
-  margin-right: 0.5rem; /* Optional: Add space between the image and the text */
+  margin-right: 0.5rem;
+  /* Optional: Add space between the image and the text */
 }
 
 .responsive-div {

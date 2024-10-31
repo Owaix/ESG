@@ -59,7 +59,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           console.log(this.questionsIds);
           this.answers.question_id = parseInt(qid);
           let no = this.questionsIds.indexOf(qid) + 1;
-          this.question_no = "Question " + no + " of " + this.questionsIds.length;
           this.answers.report_id = parseInt(reportid);
           this.mySubscription = this.service.get_question(qid, reportid).subscribe(
             response => {
@@ -67,6 +66,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               this.loaderService.hide();
               if (x.status == "SUCCESS") {
                 this.question = x.data;
+                this.question_no = "Question " + no + " of " + this.questionsIds.length;
                 this.answers.answer = this.question.user_answer;
               }
               console.log(x);

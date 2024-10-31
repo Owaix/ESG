@@ -26,9 +26,7 @@ export class AuthService {
     logout() {
         this.email = null;
         this.authenticated.next(false);
-
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('userEmail');
+        localStorage.clear();
     }
 
     getUserEmail(): string | null {

@@ -20,6 +20,7 @@ export class Header {
     // Subscribe to authentication status
     this.authService.isAuthenticated.subscribe((isAuth) => {
       this.isLoggedIn = isAuth;
+      console.log("this.isLoggedIn ", this.isLoggedIn);
       this.userEmail = isAuth ? this.authService.getUserEmail() : null;
     });
   }

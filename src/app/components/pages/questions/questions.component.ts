@@ -14,7 +14,7 @@ import { LoaderService } from 'src/app/service/loader.service';
 export class QuestionsComponent implements OnInit, OnDestroy {
   private mySubscription: Subscription | null = null;  // Initialized as null
   question: any = [];
-  responses: string[] = [];
+  questionsList: any[] = [];
   noofquestions: number = 0;
   totalquestions: number = 0;
   questionsIds: string[] = [];
@@ -26,7 +26,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   question_no: string = ""
   mutilChecks: string[] = [];
   answers: Answers = { answer: "", question_id: 0, report_id: 0 };
-  savebtnTitle = "Save & Next";
 
   constructor(private encrypt: EncryptionService,
     private service: ApiService,
@@ -51,36 +50,51 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           let Question = this.getNextValue(this.questionsIds, qid.toString());
           if (Question == null) {
             this.isComplete = false;
-            this.savebtnTitle = "Save";
           }
 
           console.log(this.questionsIds);
           this.answers.question_id = parseInt(qid);
           let no = this.questionsIds.indexOf(qid) + 1;
           this.answers.report_id = parseInt(reportid);
-          this.mySubscription = this.service.get_question(qid, reportid).subscribe(
+          this.mySubscription = this.service.get_questions(this.questionsIds, reportid).subscribe(
             response => {
-              let x = response;
-              this.loaderService.hide();
-              if (x.status == "SUCCESS") {
-                console.log(x);
-                this.question = x.data;
-                this.question_no = "Question " + no + " of " + this.questionsIds.length;
-                if (x.data.type = "co") {
-                  x.data.user_answer = isNaN(x.data.user_answer) ? 0 : x.data.user_answer;
-                  x.data.user_answer = parseInt(x.data.user_answer);
-                }
-                if (x.data.type = "ui") {
-                  x.data.user_answer = isNaN(x.data.user_answer) ? '' : x.data.user_answer;
-                }
-                this.answers.answer = x.data.user_answer;
+              for (let i = 0; i < response.length; i++) {
+                let ques = response[i];
+                ques.data.index = i+1;
+                this.questionsList.push(ques.data);
               }
+              this.loaderService.hide();
+              console.log(this.questionsList);
             },
             error => {
               this.loaderService.hide();
               console.error('Error fetching questions:', error);
             }
-          );
+          )
+
+
+          // this.mySubscription = this.service.get_question(qid, reportid).subscribe(
+          //   response => {
+          //     let x = response;
+          //     if (x.status == "SUCCESS") {
+          //       console.log(x.data);
+          //       this.question = x.data;
+          //       this.question_no = "Question " + no + " of " + this.questionsIds.length;
+          //       if (x.data.type == "co") {
+          //         x.data.user_answer = isNaN(x.data.user_answer) ? 0 : x.data.user_answer;
+          //         x.data.user_answer = parseInt(x.data.user_answer);
+          //       }
+          //       if (x.data.type == "ui") {
+          //         x.data.user_answer = isNaN(x.data.user_answer) ? '' : x.data.user_answer;
+          //       }
+          //       this.answers.answer = x.data.user_answer;
+          //     }
+          //   },
+          //   error => {
+          //     this.loaderService.hide();
+          //     console.error('Error fetching questions:', error);
+          //   }
+          // );
         } catch (error) {
           console.error('Error decrypting data:', error);
         }
@@ -91,16 +105,15 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   isChecked(optionId: string): boolean {
     return this.mutilChecks.includes(optionId);
   }
-  changeSelection(event: any, option: any) {
-    const checked = event.target.checked;
-    const optionId = option.id;
+  changeSelection(event: any, next_questions: any) {
+    console.log(next_questions)
+    // this.mySubscription = this.service.get_question(qid, this.report_id).subscribe(
+    //   response => {
+    //     let x = response;
+    //     if (x.status == "SUCCESS") {
 
-    if (checked) {
-      this.mutilChecks.push(optionId);
-    } else {
-      this.mutilChecks = this.mutilChecks.filter(id => id !== optionId);
-    }
-    console.log('Checked IDs:', this.mutilChecks);
+    //     }
+    //   })
   }
 
   saveResponses(): void {
@@ -165,6 +178,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     }
     return null;
   }
+  
 
 }
 

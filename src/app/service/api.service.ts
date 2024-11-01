@@ -56,10 +56,10 @@ export class ApiService {
     re_verify(token: any): Observable<any> {
         return this.http.post(environment.BASE_URL + 'auth/resend', token);
     }
-    get_questions(numberOfCalls: string[]): Observable<any[]> {
+    get_questions(numberOfCalls: string[], report_id: string): Observable<any[]> {
         const apiCalls: Observable<any>[] = [];
         for (let i = 0; i < numberOfCalls.length; i++) {
-            apiCalls.push(this.http.get(environment.BASE_URL + 'topic/question/' + numberOfCalls[i]));
+            apiCalls.push(this.http.get(environment.BASE_URL + 'topic/question/' + numberOfCalls[i] + '/report/' + report_id));
         }
         return forkJoin(apiCalls);
     }

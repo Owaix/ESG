@@ -1,30 +1,31 @@
-<div class="container">
+<div class="containers">
   <div class="question-list" style="text-align: -webkit-center;margin-left: 2%;margin-top: 2%;">
     <form (ngSubmit)="saveResponses()">
-      <div style="text-align: left;" class="question-item">
+      <h2>Disclosure of Organisational Details</h2>
+      <div *ngFor="let question of questionsList" style="text-align: left;" class="question-item">
         <input type="hidden" id="report_id" [(ngModel)]="answers.report_id" name="report_id" />
-        <label>{{ question_no }}</label>
-        <br>
-        <label [for]="'question'">{{ question.question }}</label>
+        <label [for]="'question'">Q-{{question.index}} : {{ question.question }}</label>
         <div *ngIf="question.type == 'co'" style="margin-top: 10px;margin-left: 10px;">
           <label *ngFor="let option of question.options;" class="custom-radio">
-            <input type="radio" [name]="'radio'" [(ngModel)]="answers.answer" [value]="option.id">
+            <input (change)="changeSelection($event, option.next_questions)" type="radio" [name]="'radio'"
+              [(ngModel)]="answers.answer" [value]="option.id">
             <span class="radio"></span>
             {{option.answer}}
           </label>
         </div>
         <div *ngIf="question.type == 'cm'" style="margin-top: 10px;margin-left: 10px;">
           <label *ngFor="let option of question.options;" class="custom-checkbox">
-            <input [checked]="isChecked(option.id)" (change)="changeSelection($event, option)" type="checkbox"
-              name="checkbox" [id]="option.id">
+            <input [checked]="isChecked(option.id)" (change)="changeSelection($event, option.next_questions)"
+              type="checkbox" name="checkbox" [id]="option.id">
             <span class="checkbox"></span>
             {{option.answer}}
           </label>
         </div>
         <input *ngIf="question.type == 'ui'" type="text" [id]="" [(ngModel)]="answers.answer" name="answer" required />
+        <hr>
       </div>
       <div style="text-align: right; ">
-        <button style="margin-right: 10px;" type="submit">{{savebtnTitle}}</button>
+        <button disabled="disabled" style="margin-right: 10px;" type="submit">Save</button>
       </div>
       <p style="color: red;text-align: justify;font-family: 'Laila-Bold';font-weight: 700;">{{error}}</p>
     </form>

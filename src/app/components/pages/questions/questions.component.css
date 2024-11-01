@@ -26,6 +26,10 @@ form {
   margin-bottom: 15px;
 }
 
+hr {
+  border-top: 1px dashed gray;
+}
+
 label {
   font-weight: bold;
   margin-bottom: 5px;

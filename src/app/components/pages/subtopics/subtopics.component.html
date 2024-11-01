@@ -2,7 +2,7 @@
     <h1 class="responsive-title">{{ name }}</h1>
     <p class="responsive-description">{{ description }}</p>
     <div class="tile-container">
-        <div (click)="showQues(item.question_ids)" class="bar" *ngFor="let item of cards">
+        <div (click)="showQues(item.question_ids , item.name )" class="bar" *ngFor="let item of cards">
             <span class="bar-label">{{ item.name }}</span>
         </div>
     </div>

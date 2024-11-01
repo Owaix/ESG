@@ -23,6 +23,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   topic_id: string = "";
   report_id: string = "";
   errormsg = '';
+  title = '';
   errortitle = 'SAVED';
   error: string = "Data has been saved successfully";
   question_no: string = ""
@@ -40,7 +41,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.loaderService.show();
     this.route.params.subscribe(params => {
       this.encryptedData = params['id'];
-      let qid = params['qid'];
+      this.title = params['qid'];
       let reportid = params['report_id'];
       this.topic_id = params['topic_id'];
       if (this.encryptedData) {

@@ -38,15 +38,12 @@ export class SubtopicsComponent {
     });
   }
 
-  showQues(id: number[]) {
+  showQues(id: number[], name: string) {
     if (id.length > 0) {
-      let qid = id[0];
       let encryptedArray = this.encrypt.encrypt(id.join(','));
-      console.log('/question', encryptedArray, qid, this.report_id, this.topic_id);
-      this.router.navigate(['/question', encryptedArray, qid, this.report_id, this.topic_id]);
+      this.router.navigate(['/question', encryptedArray, name, this.report_id, this.topic_id]);
     }
   }
-
 
   complete() {
     let obj = {

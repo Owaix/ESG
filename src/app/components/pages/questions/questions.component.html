@@ -1,7 +1,7 @@
 <div class="containers">
   <div class="question-list" style="text-align: -webkit-center;margin-left: 2%;margin-top: 2%;">
     <form (ngSubmit)="saveResponses()">
-      <h2>Disclosure of Organisational Details</h2>
+      <h2 style="font-size: 28px;text-decoration: underline;">{{title}}</h2>
       <div *ngFor="let question of questionsList; let last = last" style="text-align: left;" class="question-item">
         <!-- <input type="hidden" id="report_id" [(ngModel)]="answers[question.id].report_id" name="report_id" /> -->
         <label [for]="'question'">Q-{{question.index}} : {{ question.question }}</label>

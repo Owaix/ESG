@@ -4,6 +4,7 @@ import { User } from 'src/app/models/User';
 import { ApiService } from 'src/app/service/api.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/service/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   users: User = new User();
   private mySubscription: Subscription | null = null;  // Initialized as null
-  constructor(private service: ApiService, private authService: AuthService, private router: Router) { }
+  constructor(private loaderService: LoaderService,
+    private service: ApiService, private authService: AuthService, private router: Router) { }
   errormsg = '';
   showPassword = false;
   errortitle = 'ALERT';
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.users.email && this.users.password) {
+      this.loaderService.show();
       this.mySubscription = this.service.login(this.users).pipe(
         catchError(err => {
           if (err.status === 400) {

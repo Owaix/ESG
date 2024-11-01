@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Subscription, throwError } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
-import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
 import { LoaderService } from 'src/app/service/loader.service';
 
@@ -31,7 +30,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   constructor(private encrypt: EncryptionService,
     private service: ApiService,
-    private dataservice: DataService,
     private loaderService: LoaderService,
     private router: Router,
     private route: ActivatedRoute) {
@@ -65,15 +63,18 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               let x = response;
               this.loaderService.hide();
               if (x.status == "SUCCESS") {
+                console.log(x);
                 this.question = x.data;
                 this.question_no = "Question " + no + " of " + this.questionsIds.length;
                 if (x.data.type = "co") {
-                  // x.data.user_answer = isNaN(x.data.user_answer) ? 0 : x.data.user_answer;
+                  x.data.user_answer = isNaN(x.data.user_answer) ? 0 : x.data.user_answer;
                   x.data.user_answer = parseInt(x.data.user_answer);
+                }
+                if (x.data.type = "ui") {
+                  x.data.user_answer = isNaN(x.data.user_answer) ? '' : x.data.user_answer;
                 }
                 this.answers.answer = x.data.user_answer;
               }
-              console.log(x);
             },
             error => {
               this.loaderService.hide();
@@ -165,33 +166,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  complete() {
-    let obj = {
-      "report_id": this.answers.report_id,
-      "topic_id": this.topic_id
-    }
-    console.log(obj);
-    this.mySubscription = this.service.complete_report(obj).pipe(
-      catchError(err => {
-        if (err.status === 422) {
-          this.error = err.error.message;
-        } else {
-          this.error = err.error.message;
-        }
-        return throwError(() => console.log(err));
-      })
-    ).subscribe({
-      next: (response) => {
-        if (response.status === "SUCCESS") {
-          this.error = '';
-          console.log(response);
-        }
-      },
-      error: (error) => {
-        console.log('Error:', error);
-      }
-    })
-  }
 }
 
 export class Answers {

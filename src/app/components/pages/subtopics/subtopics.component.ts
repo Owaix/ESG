@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { catchError, Subscription, throwError } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
 import { LoaderService } from 'src/app/service/loader.service';
@@ -45,6 +45,35 @@ export class SubtopicsComponent {
       console.log('/question', encryptedArray, qid, this.report_id, this.topic_id);
       this.router.navigate(['/question', encryptedArray, qid, this.report_id, this.topic_id]);
     }
+  }
+
+
+  complete() {
+    let obj = {
+      "report_id": 0,
+      "topic_id": 0
+    }
+    console.log(obj);
+    this.mySubscription = this.service.complete_report(obj).pipe(
+      catchError(err => {
+        if (err.status === 422) {
+          // this.error = err.error.message;
+        } else {
+          // this.error = err.error.message;
+        }
+        return throwError(() => console.log(err));
+      })
+    ).subscribe({
+      next: (response) => {
+        if (response.status === "SUCCESS") {
+          // this.error = '';
+          console.log(response);
+        }
+      },
+      error: (error) => {
+        console.log('Error:', error);
+      }
+    })
   }
 
   ngOnDestroy() {

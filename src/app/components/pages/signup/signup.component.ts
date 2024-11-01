@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, Subscription, throwError } from 'rxjs';
 import { Category, CategorySector, CategoryType, User } from 'src/app/models/User';
 import { ApiService } from 'src/app/service/api.service';
+import { LoaderService } from 'src/app/service/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,11 @@ export class SignupComponent implements OnInit {
   errortitle = 'ALERT';
   categories: Category[] = []
 
-  constructor(private service: ApiService, private router: Router) { }
+  constructor(
+    private service: ApiService,
+    private router: Router,
+    private loaderService: LoaderService
+  ) { }
   ngOnInit(): void {
     this.mySubscription = this.service.Getcategories().subscribe(x => {
       if (x.status == "SUCCESS") {
@@ -33,6 +38,7 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (this.users.email && this.users.password) {
+      this.loaderService.show();
       this.mySubscription = this.service.register(this.users).pipe(
         catchError(err => {
           if (err.status === 400) {

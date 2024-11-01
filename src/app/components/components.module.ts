@@ -18,15 +18,15 @@ import { SubtopicsComponent } from './pages/subtopics/subtopics.component';
 import { QuestionsComponent } from './pages/questions/questions.component';
 import { EncryptionService } from "../service/encrypt.service";
 import { ModalComponent } from './shared/modal/modal.component';
-import { LoaderComponent } from './shared/loader/loader/loader.component';
+import { AuthGuard } from "../service/auth.guard";
 
 const routes: Routes = [
   { path: '', component: Main },  // Redirect from MasterPageComponent
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'topics', component: TopicsComponent },
-  { path: 'subtopics/:id/:report_id', component: SubtopicsComponent },
-  { path: 'question/:id/:qid/:report_id/:topic_id', component: QuestionsComponent }
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
+  { path: 'topics', component: TopicsComponent, canActivate: [AuthGuard] },
+  { path: 'subtopics/:id/:report_id', component: SubtopicsComponent, canActivate: [AuthGuard] },
+  { path: 'question/:id/:qid/:report_id/:topic_id', component: QuestionsComponent, canActivate: [AuthGuard] },
 ];
 
 const routerOptions: ExtraOptions = {

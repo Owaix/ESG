@@ -10,9 +10,12 @@
   <a routerLink="" fragment="articles" (click)="onNavItemClick()">PRICING</a>
   <a routerLink="" fragment="articles" (click)="onNavItemClick()">CONTACT US</a>
   <a *ngIf="isLoggedIn" routerLink="/topics" (click)="onNavItemClick()">MY ACCOUNT</a>
-  <a *ngIf="!isLoggedIn" style="color: white" routerLink="/signup" class="links" (click)="onNavItemClick()">SIGN UP</a>
-  <a *ngIf="!isLoggedIn" style="color: white" routerLink="/login" class="links" (click)="onNavItemClick()">LOG IN</a>
-  <a *ngIf="isLoggedIn" (click)="logout(); onNavItemClick()" style="color: white" href="#" class="links">LOG OUT</a>
+  <a *ngIf="!isLoggedIn" style="color: white ; background-color: #84c5be; " routerLink="/signup" class="links"
+    (click)="onNavItemClick()">SIGN UP</a>
+  <a *ngIf="!isLoggedIn" style="color: white ; background-color: #84c5be;" routerLink="/login" class="links"
+    (click)="onNavItemClick()">LOG IN</a>
+  <a *ngIf="isLoggedIn" (click)="logout(); onNavItemClick()" style="color: white ; background-color: #84c5be;" href="#"
+    class="links">LOG OUT</a>
 </nav>
 <!-- <ng-container *ngIf="isLoggedIn; else loggedOutTemplate">
   <div class="user-info">

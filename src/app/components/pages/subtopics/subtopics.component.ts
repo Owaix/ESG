@@ -15,6 +15,8 @@ export class SubtopicsComponent {
   private mySubscription: Subscription | null = null;  // Initialized as null
   cards: any[] = [];
   name: string = "";
+  errormsg = '';
+  errortitle = 'ALERT';
   topic_id: number = 0;
   description: string = "";
   report_id: string = "";
@@ -44,27 +46,38 @@ export class SubtopicsComponent {
       this.router.navigate(['/question', encryptedArray, name, this.report_id, this.topic_id]);
     }
   }
+  isModalOpen = false;
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
 
   complete() {
     let obj = {
-      "report_id": 0,
-      "topic_id": 0
+      "report_id": parseInt(this.encrypt.decrypt(this.report_id)),
+      "topic_id": this.topic_id
     }
     console.log(obj);
     this.mySubscription = this.service.complete_report(obj).pipe(
       catchError(err => {
         if (err.status === 422) {
-          // this.error = err.error.message;
+          this.errormsg = err.error.message;
+          this.openModal();
         } else {
-          // this.error = err.error.message;
+          this.errormsg = err.error.message;
+          this.openModal();
         }
         return throwError(() => console.log(err));
       })
     ).subscribe({
       next: (response) => {
         if (response.status === "SUCCESS") {
-          // this.error = '';
-          console.log(response);
+          this.errormsg = "Topic Completed Successfully";
+          this.errortitle = "SUCCESS";
+          this.openModal();
         }
       },
       error: (error) => {

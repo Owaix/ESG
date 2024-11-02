@@ -29,6 +29,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   question_no: string = ""
   mutilChecks: string[] = [];
   answers: Answers[] = [];
+  selectedOptionsByQuestionId: { [key: number]: number[] } = {};
 
   constructor(private encrypt: EncryptionService,
     private service: ApiService,
@@ -53,7 +54,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
             response => {
               for (let i = 0; i < response.length; i++) {
                 let ques = response[i].data;
-                ques.index = i + 1;
                 if (ques.type == 'co') {
                   ques.user_answer = parseInt(ques.user_answer);
                 }
@@ -67,30 +67,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               console.error('Error fetching questions:', error);
             }
           )
-
-
-          // this.mySubscription = this.service.get_question(qid, reportid).subscribe(
-          //   response => {
-          //     let x = response;
-          //     if (x.status == "SUCCESS") {
-          //       console.log(x.data);
-          //       this.question = x.data;
-          //       this.question_no = "Question " + no + " of " + this.questionsIds.length;
-          //       if (x.data.type == "co") {
-          //         x.data.user_answer = isNaN(x.data.user_answer) ? 0 : x.data.user_answer;
-          //         x.data.user_answer = parseInt(x.data.user_answer);
-          //       }
-          //       if (x.data.type == "ui") {
-          //         x.data.user_answer = isNaN(x.data.user_answer) ? '' : x.data.user_answer;
-          //       }
-          //       this.answers.answer = x.data.user_answer;
-          //     }
-          //   },
-          //   error => {
-          //     this.loaderService.hide();
-          //     console.error('Error fetching questions:', error);
-          //   }
-          // );
         } catch (error) {
           console.error('Error decrypting data:', error);
         }
@@ -101,15 +77,26 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   isChecked(optionId: string): boolean {
     return this.mutilChecks.includes(optionId);
   }
-  changeSelection(event: any, next_questions: any) {
-    console.log(next_questions)
-    // this.mySubscription = this.service.get_question(qid, this.report_id).subscribe(
-    //   response => {
-    //     let x = response;
-    //     if (x.status == "SUCCESS") {
+  changeSelection(event: any, next_questions: any[], question_id: number) {
+    const index = this.questionsList.findIndex(item => item.id === question_id && item.id !== 'mc');
 
-    //     }
-    //   })
+    if (index !== -1) {
+      if (next_questions) {
+        const uniqueNextQuestions = next_questions.filter(
+          newItem => !this.questionsList.some(existingItem => existingItem.id === newItem.id)
+        );
+
+        this.questionsList = [
+          ...this.questionsList.slice(0, index + 1),
+          ...uniqueNextQuestions,
+          ...this.questionsList.slice(index + 1)
+        ];
+
+        this.questionsList[index + 1].isNextQuestion = true;
+      } else {
+        this.questionsList = this.questionsList.filter(item => !item.isNextQuestion);
+      }
+    }
   }
 
   parseToInt(answer: any) {
@@ -118,52 +105,26 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   saveResponses(): void {
     for (let i = 0; i < this.questionsList.length; i++) {
+      let answer = {};
       let question = this.questionsList[i];
-      let answer = {
-        report_id: this.report_id,
-        question_id: question.id,
-        answer: question.user_answer
+      let checkans = this.selectedOptionsByQuestionId[question.id];
+      if (checkans !== undefined) {
+        answer = {
+          report_id: this.report_id,
+          question_id: question.id,
+          answer: checkans
+        }
+      } else {
+        answer = {
+          report_id: this.report_id,
+          question_id: question.id,
+          answer: question.user_answer
+        }
       }
-      console.log(answer);
       this.mySubscription = this.service.SaveQuestions(answer).subscribe(x => {
         console.log(x);
       })
       this.openModal();
-    }
-    return;
-    if (false) {
-      if (this.question.type == "ui") {
-        this.error = "Please write an answer to the question";
-      } else {
-        this.error = "Please choose an answer to the question";
-      }
-    } else {
-      this.error = "";
-      // this.mySubscription = this.service.SaveQuestions(this.answers).subscribe(x => {
-      //   if (x.status == "SUCCESS") {
-      //     if (this.question.type == "co") {
-      //       console.log(x);
-      //       console.log(this.questionsIds);
-      //       let options = this.question.options.find((x: { id: string; }) => x.id == this.answers.answer);
-      //       let result = this.questionsIds.filter(num => num > this.answers.question_id.toString());
-      //       let incomingValues: string[] = [];
-      //       if (options.has_next_question == true) {
-      //         for (let i = 0; i < options.next_questions.length; i++) {
-      //           let sub = options.next_questions[i];
-      //           incomingValues.push(sub.id.toString());
-      //         }
-      //         result = incomingValues.concat(result);
-      //       }
-      //       let encryptArray = this.encrypt.encrypt(result.join(','));
-      //       this.router.navigate(['/question', encryptArray, result[0], this.report_id, this.topic_id]);
-      //     } else if (this.question.type == "ui") {
-      //       let qid = this.getNextValue(this.questionsIds, this.answers.question_id.toString());
-      //       this.router.navigate(['/question', this.encryptedData, qid, this.report_id, this.topic_id]);
-      //     }
-      //   } else {
-      //     alert("Answer cannot be empty! Please select an answer!")
-      //   }
-      // })
     }
   }
 
@@ -177,16 +138,16 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.isModalOpen = false;
   }
 
-  updateCheckboxAnswers(questionId: number, optionId: string) {
-    // if (!this.answers[questionId]) {
-    //   this.answers[questionId] = [];
-    // }
-
-    // if (checked) {
-    //   this.answers[questionId].push(optionId);
-    // } else {
-    //   this.answers[questionId] = this.answers[questionId].filter(id => id !== optionId);
-    // }
+  updateCheckboxAnswers(questionId: number, optionId: number) {
+    if (!this.selectedOptionsByQuestionId[questionId]) {
+      this.selectedOptionsByQuestionId[questionId] = [];
+    }
+    const index = this.selectedOptionsByQuestionId[questionId].indexOf(optionId);
+    if (index === -1) {
+      this.selectedOptionsByQuestionId[questionId].push(optionId);
+    } else {
+      this.selectedOptionsByQuestionId[questionId].splice(index, 1);
+    }
   }
 
   ngOnDestroy() {

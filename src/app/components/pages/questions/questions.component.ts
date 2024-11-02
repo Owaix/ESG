@@ -56,6 +56,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
                 let ques = response[i].data;
                 if (ques.type == 'co') {
                   ques.user_answer = parseInt(ques.user_answer);
+                  // let sub = ques.options.find((x: { id: number; }) => x.id == ques.user_answer);
+                  // if (sub.has_next_question) {
+                  //   this.changeSelection(ques.next_questions, ques.id);
+                  // }
                 }
                 this.questionsList.push(ques);
               }
@@ -77,7 +81,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   isChecked(optionId: string): boolean {
     return this.mutilChecks.includes(optionId);
   }
-  changeSelection(event: any, next_questions: any[], question_id: number) {
+  changeSelection(next_questions: any[], question_id: number) {
     const index = this.questionsList.findIndex(item => item.id === question_id && item.id !== 'mc');
 
     if (index !== -1) {

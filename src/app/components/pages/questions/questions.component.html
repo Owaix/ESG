@@ -8,7 +8,7 @@
         <label [for]="'question'">Q-{{i +1}} : {{ question.question }}</label>
         <div *ngIf="question.type == 'co'" style="margin-top: 10px;margin-left: 10px;">
           <label *ngFor="let option of question.options;" class="custom-radio">
-            <input (change)="changeSelection($event, option.next_questions , question.id)" type="radio"
+            <input (change)="changeSelection( option.next_questions , question.id)" type="radio"
               name="user_answer_{{option.id}}" [(ngModel)]="question.user_answer" [value]="option.id">
             <span class="radio"></span>
             {{option.answer}}

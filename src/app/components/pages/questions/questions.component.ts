@@ -64,6 +64,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
                 this.questionsList.push(ques);
               }
               this.loaderService.hide();
+              this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
               console.log(this.questionsList);
             },
             error => {
@@ -78,8 +79,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     });
   }
 
-  isChecked(optionId: string): boolean {
-    return this.mutilChecks.includes(optionId);
+  isChecked(optionId: number, anser: number[]): boolean {
+    return anser.includes(optionId);
   }
   changeSelection(next_questions: any[], question_id: number) {
     const index = this.questionsList.findIndex(item => item.id === question_id && item.id !== 'mc');
@@ -101,6 +102,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.questionsList = this.questionsList.filter(item => !item.isNextQuestion);
       }
     }
+    console.log(this.questionsList);
   }
 
   parseToInt(answer: any) {
@@ -158,6 +160,22 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     if (this.mySubscription) {
       this.mySubscription.unsubscribe();
     }
+  }
+
+  addNextQuestionsAsSiblings(questions: any[]) {
+    let results: any[] = [];
+
+    questions.forEach(question => {
+      results.push(question); // Add the parent question
+
+      const userAnswerId = question.user_answer;
+      const matchingOption = question.options.find((option: { id: any; }) => option.id === userAnswerId);
+      if (matchingOption && matchingOption.has_next_question) {
+        results.push(...matchingOption.next_questions);
+      }
+    });
+
+    return results;
   }
 
   formatAnswer(type: string, answer: string): any {

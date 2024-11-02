@@ -16,8 +16,8 @@
         </div>
         <div *ngIf="question.type == 'cm'" style="margin-top: 10px;margin-left: 10px;">
           <label *ngFor="let option of question.options;" class="custom-checkbox">
-            <input [checked]="isChecked(option.id)" (change)="updateCheckboxAnswers(question.id, option.id)"
-              type="checkbox" name="checkbox" [id]="option.id">
+            <input [checked]="isChecked(option.id , question.user_answer)"
+              (change)="updateCheckboxAnswers(question.id, option.id)" type="checkbox" name="checkbox" [id]="option.id">
             <span class="checkbox"></span>
             {{option.answer}}
           </label>

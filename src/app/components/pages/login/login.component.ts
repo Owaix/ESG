@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
             this.errormsg = err.error.message;
             this.openModal();
           }
+          this.loaderService.hide();
           return throwError(() => new Error(err));
         })
       ).subscribe(

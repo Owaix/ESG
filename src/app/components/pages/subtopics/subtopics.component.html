@@ -10,7 +10,7 @@
 </div>
 
 
-<app-modal *ngIf="isModalOpen" (close)="closeModal()">
+<app-modal *ngIf="isModalOpen" [errortitle]="errortitle" (close)="closeModal()">
     <h2>{{errortitle}}</h2>
     <p style="font-size: 19px;">{{errormsg}}</p>
 </app-modal>

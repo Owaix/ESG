@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit {
       ).subscribe(
         response => {
           if (response.status == "SUCCESS") {
-            this.errormsg = '';
+            this.errormsg = 'success';
             //localStorage.setItem('token', response.data.access_token);
             console.log(response);
             // this.authService.login(this.users.email);

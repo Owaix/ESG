@@ -12,10 +12,8 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: any): boolean {
         const isAuthRoute = route.url[0].path === 'login' || route.url[0].path === 'signup';
-        console.log(isAuthRoute);
         this.authService.isAuthenticated.subscribe((isAuth) => {
             this.isLoggedIn = isAuth;
-            console.log("this.isLoggedIn ", this.isLoggedIn);
         });
         if (this.isLoggedIn) {
             if (isAuthRoute) {
@@ -24,7 +22,6 @@ export class AuthGuard implements CanActivate {
             }
         } else {
             if (!isAuthRoute) {
-                // Redirect unauthenticated users to login
                 this.router.navigate(['/']);
                 return false;
             }

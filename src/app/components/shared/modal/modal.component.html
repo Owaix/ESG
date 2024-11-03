@@ -1,11 +1,10 @@
 <div class="modal-overlay" (click)="closeModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <button class="close-button" (click)="closeModal()">X</button>
-      <div class="image-container">
-        <img src="../../../../assets/images/delete.png" alt="Delete Icon">
-      </div>
-      <ng-content></ng-content>
-      <button class="ok-button" (click)="closeModal()">OK</button>
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeModal()">X</button>
+    <div class="image-container">
+      <img [src]="imageSrc" alt="Icon">
     </div>
+    <ng-content></ng-content>
+    <button [style.backgroundColor]="textColor" class="ok-button" (click)="closeModal()">OK</button>
   </div>
-  
+</div>

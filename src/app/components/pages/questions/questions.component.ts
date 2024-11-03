@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Subscription, throwError } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
+import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
 import { LoaderService } from 'src/app/service/loader.service';
 
@@ -24,7 +25,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   report_id: string = "";
   errormsg = '';
   title = '';
-  errortitle = 'SAVED';
+  errortitle = '';
   error: string = "Data has been saved successfully";
   question_no: string = ""
   mutilChecks: string[] = [];
@@ -35,7 +36,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     private service: ApiService,
     private loaderService: LoaderService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private dataService: DataService) {
   }
 
   ngOnInit(): void {
@@ -61,6 +62,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               }
               this.loaderService.hide();
               this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
+              console.log(this.questionsList);
             },
             error => {
               this.loaderService.hide();
@@ -75,7 +77,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   isChecked(optionId: number, anser: number[]): boolean {
-    return anser.includes(optionId);
+    if (anser == null || anser.length == 0) {
+      return false;
+    } else {
+      return anser.includes(optionId);
+    }
   }
   changeSelection(next_questions: any[], question_id: number) {
     const index = this.questionsList.findIndex(item => item.id === question_id && item.id !== 'mc');
@@ -85,19 +91,17 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         const uniqueNextQuestions = next_questions.filter(
           newItem => !this.questionsList.some(existingItem => existingItem.id === newItem.id)
         );
-
+        uniqueNextQuestions.map(num => num.parent_id = question_id);
         this.questionsList = [
           ...this.questionsList.slice(0, index + 1),
           ...uniqueNextQuestions,
           ...this.questionsList.slice(index + 1)
         ];
-
         this.questionsList[index + 1].isNextQuestion = true;
       } else {
         this.questionsList = this.questionsList.filter(item => item.parent_id !== question_id);
       }
     }
-    console.log(this.questionsList);
   }
 
   parseToInt(answer: any) {
@@ -122,7 +126,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           answer: question.user_answer
         }
       }
+      console.log(answer);
       this.mySubscription = this.service.SaveQuestions(answer).subscribe(x => {
+        this.error = "success"
         console.log(x);
       })
       this.openModal();
@@ -139,8 +145,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.isModalOpen = false;
   }
 
-  updateCheckboxAnswers(questionId: number, optionId: number) {
-    console.log(this.selectedOptionsByQuestionId);
+  radio_Change(questionId: number, optionId: number) {
     if (!this.selectedOptionsByQuestionId[questionId]) {
       this.selectedOptionsByQuestionId[questionId] = [];
     }
@@ -150,6 +155,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     } else {
       this.selectedOptionsByQuestionId[questionId].splice(index, 1);
     }
+    console.log(this.selectedOptionsByQuestionId);
   }
 
   ngOnDestroy() {
@@ -169,7 +175,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       if (matchingOption && matchingOption.has_next_question) {
         for (let i = 0; i < matchingOption.next_questions.length; i++) {
           let sub = matchingOption.next_questions[i];
-          this.selectedOptionsByQuestionId[question.id] = JSON.parse(question.user_answer);
+          if (sub.type == 'mc') {
+            this.selectedOptionsByQuestionId[sub.id] = JSON.parse(sub.user_answer);
+          }
           sub.parent_id = question.id;
           results.push(sub);
         }

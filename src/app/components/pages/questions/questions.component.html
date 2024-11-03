@@ -17,7 +17,7 @@
         <div *ngIf="question.type == 'cm'" style="margin-top: 10px;margin-left: 10px;">
           <label *ngFor="let option of question.options;" class="custom-checkbox">
             <input [checked]="isChecked(option.id , question.user_answer)"
-              (change)="updateCheckboxAnswers(question.id, option.id)" type="checkbox" name="checkbox" [id]="option.id">
+              (change)="radio_Change(question.id, option.id)" type="checkbox" name="checkbox" [id]="option.id">
             <span class="checkbox"></span>
             <span>{{option.answer}}</span>
           </label>
@@ -27,13 +27,13 @@
         <hr *ngIf="!last">
       </div>
       <div style="text-align: right; ">
-        <button style="margin-right: 10px;" type="submit">Save</button>
+        <button class="links" style="margin-right: 10px;" type="submit">Save</button>
       </div>
     </form>
   </div>
 </div>
 
-<app-modal *ngIf="isModalOpen" (close)="closeModal()">
+<app-modal *ngIf="isModalOpen" [errortitle]="error" (close)="closeModal()">
   <h2>{{error}}</h2>
   <p style="font-size: 19px;">{{errormsg}}</p>
 </app-modal>

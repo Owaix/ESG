@@ -34,7 +34,6 @@ export class TopicsComponent {
         this.cards = x.data.topics;
         console.log(this.cards);
         this.report_id = this.encrypt.encrypt(x.data.report_id.toString());
-        this.dataservice.createHeader(x.data.report_ref_no);
       }
       this.loaderService.hide();
     })

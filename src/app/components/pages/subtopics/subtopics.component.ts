@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Subscription, throwError } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
+import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
 import { LoaderService } from 'src/app/service/loader.service';
 
@@ -23,7 +24,9 @@ export class SubtopicsComponent {
 
   constructor(
     private loaderService: LoaderService,
-    private encrypt: EncryptionService, private service: ApiService, private router: Router, private route: ActivatedRoute) { }
+    private encrypt: EncryptionService, private service: ApiService, private router: Router, private route: ActivatedRoute
+    , private dataService: DataService
+  ) { }
   ngOnInit(): void {
     this.loaderService.show();
     this.route.params.subscribe(params => {

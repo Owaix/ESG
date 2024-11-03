@@ -47,7 +47,8 @@ export class VerifyComponent implements OnInit {
   }
   resendEmail(): void {
     let obj = {
-      verification_token: this.token
+      type: "token",
+      data: this.token
     }
     this.mySubscription = this.service.re_verify(obj).subscribe(x => {
       if (x.status == "SUCCESS") {

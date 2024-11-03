@@ -56,15 +56,12 @@ export class QuestionsComponent implements OnInit, OnDestroy {
                 let ques = response[i].data;
                 if (ques.type == 'co') {
                   ques.user_answer = parseInt(ques.user_answer);
-                  // let sub = ques.options.find((x: { id: number; }) => x.id == ques.user_answer);
-                  // if (sub.has_next_question) {
-                  //   this.changeSelection(ques.next_questions, ques.id);
-                  // }
                 }
                 this.questionsList.push(ques);
               }
               this.loaderService.hide();
               this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
+              console.log(this.selectedOptionsByQuestionId);
               console.log(this.questionsList);
             },
             error => {
@@ -99,7 +96,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
         this.questionsList[index + 1].isNextQuestion = true;
       } else {
-        this.questionsList = this.questionsList.filter(item => !item.isNextQuestion);
+        this.questionsList = this.questionsList.filter(item => item.parent_id !== question_id);
       }
     }
     console.log(this.questionsList);
@@ -145,6 +142,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   updateCheckboxAnswers(questionId: number, optionId: number) {
+    console.log(this.selectedOptionsByQuestionId);
     if (!this.selectedOptionsByQuestionId[questionId]) {
       this.selectedOptionsByQuestionId[questionId] = [];
     }
@@ -166,12 +164,17 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     let results: any[] = [];
 
     questions.forEach(question => {
-      results.push(question); // Add the parent question
+      results.push(question);
 
       const userAnswerId = question.user_answer;
       const matchingOption = question.options.find((option: { id: any; }) => option.id === userAnswerId);
       if (matchingOption && matchingOption.has_next_question) {
-        results.push(...matchingOption.next_questions);
+        for (let i = 0; i < matchingOption.next_questions.length; i++) {
+          let sub = matchingOption.next_questions[i];
+          this.selectedOptionsByQuestionId[question.id] = JSON.parse(question.user_answer);
+          sub.parent_id = question.id;
+          results.push(sub);
+        }
       }
     });
 

@@ -61,8 +61,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               }
               this.loaderService.hide();
               this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
-              console.log(this.selectedOptionsByQuestionId);
-              console.log(this.questionsList);
             },
             error => {
               this.loaderService.hide();

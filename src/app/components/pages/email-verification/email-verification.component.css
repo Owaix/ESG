@@ -1,50 +1,49 @@
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
+.signup-success {
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  background-color: #ffffff;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.logo {
+  width: 80%; /* Responsive logo size */
+  max-width: 100px; /* Max size */
+  margin-bottom: 20px;
+}
+
+.header {
+  color: #4CAF50;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.message {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.email-message {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .header {
+      font-size: 20px; /* Smaller header on mobile */
   }
   
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+  .message {
+      font-size: 16px; /* Smaller message on mobile */
   }
   
-  .input-group {
-    margin-bottom: 15px;
+  .email-message {
+      font-size: 12px; /* Smaller email message on mobile */
   }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    border-radius: 35px;
-  }
-  
-  input:focus {
-    border-color: #007BFF;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  button:hover:not(:disabled) {
-    background-color: #0056b3;
-  }
-  
-  .error {
-    color: red;
-    font-size: 14px;
-  }
+}

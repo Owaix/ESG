@@ -56,7 +56,6 @@ export class SignupComponent implements OnInit {
             this.errormsg = '';
             //localStorage.setItem('token', response.data.access_token);
             console.log(response);
-            alert("SUCCESSFULLY REGISTERED!");
             // this.authService.login(this.users.email);
             this.router.navigate(['/everif']);
           }

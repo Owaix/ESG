@@ -19,7 +19,7 @@
             </span>
             <span *ngIf="card.status == 'In Progress'" class="status-inline">
                 <img style="width: 24px;" src="../../../../assets/images/reject.png" alt="Process Icon">
-                <span style="color: red;"> {{ card.status }}</span>
+                <span style="color: #de6666;"> {{ card.status }}</span>
             </span>
         </div>
         <button (click)="subtopics(card.id)" class="edit-button">Edit</button>
@@ -32,7 +32,18 @@
         </div>
         <div class="status">
             <span class="status-inline">
-                <span style="color: #5f5fb6;"> 10/2/1022</span>
+                <span style="color: #5f5fb6;"> 11/2/2024</span>
+            </span>
+        </div>
+        <button class="edit-button">Generate PDF</button>
+    </div>
+    <div class="responsive-div">
+        <div class="topic-box">
+            <h3>ESG REPORT</h3>
+        </div>
+        <div class="status">
+            <span class="status-inline">
+                <span style="color: #5f5fb6;"> 10/2/2024</span>
             </span>
         </div>
         <button class="edit-button">Generate PDF</button>

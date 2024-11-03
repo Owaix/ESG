@@ -65,13 +65,17 @@ button:hover {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 400px) {
   .question-list {
     padding: 10px;
   }
 
   button {
     padding: 10px;
+  }
+
+  .custom-checkbox .checkbox {
+    width: 45px !important;
   }
 }
 

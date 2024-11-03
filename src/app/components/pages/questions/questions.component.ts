@@ -41,9 +41,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loaderService.show();
+    this.dataService.currentData.subscribe(x => {
+      this.title = x.title;
+      this.topic_id = x.topic_id;
+    })
     this.route.params.subscribe(params => {
       this.encryptedData = params['id'];
-      this.title = params['qid'];
+      // this.title = params['qid'];
       let reportid = params['report_id'];
       this.topic_id = params['topic_id'];
       if (this.encryptedData) {
@@ -61,8 +65,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
                 this.questionsList.push(ques);
               }
               this.loaderService.hide();
-              this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
               console.log(this.questionsList);
+              this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
             },
             error => {
               this.loaderService.hide();
@@ -166,10 +170,12 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   addNextQuestionsAsSiblings(questions: any[]) {
     let results: any[] = [];
-
-    questions.forEach(question => {
+    for (let j = 0; j < questions.length; j++) {
+      let question = questions[j];
       results.push(question);
-
+      if (question.options === undefined) {
+        continue;
+      }
       const userAnswerId = question.user_answer;
       const matchingOption = question.options.find((option: { id: any; }) => option.id === userAnswerId);
       if (matchingOption && matchingOption.has_next_question) {
@@ -182,7 +188,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           results.push(sub);
         }
       }
-    });
+    }
 
     return results;
   }

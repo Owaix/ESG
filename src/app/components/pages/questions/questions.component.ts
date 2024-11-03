@@ -23,10 +23,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   isComplete = true;
   topic_id: string = "";
   report_id: string = "";
-  errormsg = '';
   title = '';
   errortitle = '';
-  error: string = "Data has been saved successfully";
+  errormsg: string = "Data has been saved successfully";
   question_no: string = ""
   mutilChecks: string[] = [];
   answers: Answers[] = [];
@@ -42,42 +41,35 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loaderService.show();
     this.dataService.currentData.subscribe(x => {
+      let reportid = x.report_id;
+      let decryptedArray = x.questionList;
       this.title = x.title;
       this.topic_id = x.topic_id;
-    })
-    this.route.params.subscribe(params => {
-      this.encryptedData = params['id'];
-      // this.title = params['qid'];
-      let reportid = params['report_id'];
-      this.topic_id = params['topic_id'];
-      if (this.encryptedData) {
-        try {
-          let decryptedArray = this.encrypt.decrypt(this.encryptedData);
-          this.report_id = this.encrypt.decrypt(reportid);
-          this.questionsIds = decryptedArray.split(',');
-          this.mySubscription = this.service.get_questions(this.questionsIds, this.report_id).subscribe(
-            response => {
-              for (let i = 0; i < response.length; i++) {
-                let ques = response[i].data;
-                if (ques.type == 'co') {
-                  ques.user_answer = parseInt(ques.user_answer);
-                }
-                this.questionsList.push(ques);
+      try {
+        this.report_id = this.encrypt.decrypt(reportid);
+        this.questionsIds = decryptedArray.split(',');
+        this.mySubscription = this.service.get_questions(this.questionsIds, this.report_id).subscribe(
+          response => {
+            for (let i = 0; i < response.length; i++) {
+              let ques = response[i].data;
+              if (ques.type == 'co') {
+                ques.user_answer = parseInt(ques.user_answer);
               }
-              this.loaderService.hide();
-              console.log(this.questionsList);
-              this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
-            },
-            error => {
-              this.loaderService.hide();
-              console.error('Error fetching questions:', error);
+              this.questionsList.push(ques);
             }
-          )
-        } catch (error) {
-          console.error('Error decrypting data:', error);
-        }
+            this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
+            this.loaderService.hide();
+          },
+          error => {
+            this.loaderService.hide();
+            console.error('Error fetching questions:', error);
+          }
+        )
+      } catch (error) {
+        console.error('Error decrypting data:', error);
       }
-    });
+    })
+
   }
 
   isChecked(optionId: number, anser: number[]): boolean {
@@ -106,6 +98,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.questionsList = this.questionsList.filter(item => item.parent_id !== question_id);
       }
     }
+    console.log(this.questionsList);
   }
 
   parseToInt(answer: any) {
@@ -132,7 +125,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       }
       console.log(answer);
       this.mySubscription = this.service.SaveQuestions(answer).subscribe(x => {
-        this.error = "success"
+        this.errortitle = "success"
         console.log(x);
       })
       this.openModal();
@@ -180,10 +173,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       const matchingOption = question.options.find((option: { id: any; }) => option.id === userAnswerId);
       if (matchingOption && matchingOption.has_next_question) {
         for (let i = 0; i < matchingOption.next_questions.length; i++) {
-          let sub = matchingOption.next_questions[i];
-          if (sub.type == 'mc') {
+          let sub = matchingOption.next_questions[i];          
+          if (sub.type == 'cm') {            
             this.selectedOptionsByQuestionId[sub.id] = JSON.parse(sub.user_answer);
-          }
+            console.log(this.selectedOptionsByQuestionId[sub.id])
+          }          
           sub.parent_id = question.id;
           results.push(sub);
         }

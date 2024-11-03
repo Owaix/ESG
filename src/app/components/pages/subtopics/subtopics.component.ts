@@ -17,7 +17,7 @@ export class SubtopicsComponent {
   cards: any[] = [];
   name: string = "";
   errormsg = '';
-  errortitle = 'ALERT';
+  errortitle = 'success';
   topic_id: number = 0;
   description: string = "";
   report_id: string = "";
@@ -45,14 +45,13 @@ export class SubtopicsComponent {
 
   showQues(id: number[], name: string) {
     if (id.length > 0) {
-      let encryptedArray = this.encrypt.encrypt(id.join(','));
       this.dataService.changeData({
         topic_id: this.topic_id,
         report_id: this.report_id,
         title: name,
         questionList: id.join(',')
       })
-      this.router.navigate(['/question', encryptedArray, name, this.report_id, this.topic_id]);
+      this.router.navigate(['/question']);
     }
   }
   isModalOpen = false;
@@ -83,7 +82,7 @@ export class SubtopicsComponent {
       })
     ).subscribe({
       next: (response) => {
-        if (response.status === "SUCCESS") {
+        if (response.status == "SUCCESS") {
           this.errormsg = "Topic Completed Successfully";
           this.errortitle = "SUCCESS";
           this.openModal();

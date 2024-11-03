@@ -10,13 +10,13 @@ export class ModalComponent {
   @Input() errortitle: string = '';
 
   get imageSrc(): string {
-    return this.errortitle === 'success'
+    return this.errortitle.toLowerCase() == 'success'
       ? '../../../../assets/images/success.png'
       : '../../../../assets/images/delete.png'; // Default image for error
   }
 
   get textColor(): string {
-    return this.errortitle === 'success' ? 'green' : 'red'; // Color for success or error
+    return this.errortitle.toLowerCase() == 'success' ? 'green' : 'red'; // Color for success or error
   }
   closeModal() {
     this.close.emit();

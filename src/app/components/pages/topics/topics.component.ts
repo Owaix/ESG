@@ -17,7 +17,7 @@ export class TopicsComponent {
   cards: any[] = [];
   report_id: string = '';
   errormsg = '';
-  errortitle = 'ALERT';
+  errortitle = 'success';
 
   constructor(
     private service: ApiService,
@@ -45,13 +45,13 @@ export class TopicsComponent {
     this.mySubscription = this.service.submit_report(obj).pipe(
       catchError(err => {
         if (err.status === 400) {
-          this.errormsg = err.error.message;
+          this.errormsg = err.error.message;          
           this.openModal();
         } else {
           this.errormsg = err.error.message;
           this.openModal();
         }
-        console.log(err.error);
+        this.errortitle = "ALERT";
         return throwError(() => new Error(err));
       })
     ).subscribe(

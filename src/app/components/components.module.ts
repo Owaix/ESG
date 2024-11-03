@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
   { path: 'topics', component: TopicsComponent, canActivate: [AuthGuard] },
   { path: 'subtopics/:id/:report_id', component: SubtopicsComponent, canActivate: [AuthGuard] },
-  { path: 'question/:id/:qid/:report_id/:topic_id', component: QuestionsComponent, canActivate: [AuthGuard] },
+  { path: 'question', component: QuestionsComponent, canActivate: [AuthGuard] },
 ];
 
 const routerOptions: ExtraOptions = {

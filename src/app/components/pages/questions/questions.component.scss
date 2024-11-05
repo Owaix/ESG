@@ -39,10 +39,17 @@ form {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
   text-align: left;
-  background-color: #ececec;
+  background-color: #eeeeee;
   padding: 15px;
   border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #d5d5d5;
+  }
 }
+
+
 
 hr {
   border-top: 1px dashed #4f4f4f;

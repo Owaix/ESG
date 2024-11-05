@@ -1,9 +1,10 @@
 <section id="login">
     <div>
         <div class="login-container">
-            <form style="text-align: center;" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
                 <h2>Sign into your account</h2>
-
+                <br>
+                <br>
                 <div class="input-group">
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" [(ngModel)]="users.email" required
@@ -12,7 +13,7 @@
                         email is required
                     </div>
                 </div>
-
+                <br>
                 <div class="input-group">
                     <label for="password">Password</label>
                     <div style="position: relative;">
@@ -35,8 +36,10 @@
                         Password must contain at least one number, one special character, and one letter
                     </div>
                 </div>
-
-                <button type="submit" class="links" [disabled]="loginForm.invalid">Log in</button>
+                <br>
+                <div style="text-align: center;">
+                    <button type="submit" class="links" [disabled]="loginForm.invalid">Log in</button>
+                </div>
             </form>
         </div>
     </div>

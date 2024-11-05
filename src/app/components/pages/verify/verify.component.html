@@ -14,6 +14,6 @@
             </ul>
         </div>
         <br>
-        <a [ngStyle]="{ color: linkColor }" [href]="loginLink" class="links">{{ loginText }}</a>
+        <button [ngStyle]="{ color: linkColor }" href="#" (click)="resendEmail()" class="links">{{ loginText }}</button>
     </div>
 </div>

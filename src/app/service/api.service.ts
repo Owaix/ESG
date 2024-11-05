@@ -54,7 +54,7 @@ export class ApiService {
     }
 
     re_verify(token: any): Observable<any> {
-        return this.http.post(environment.BASE_URL + 'auth/resend', token);
+        return this.http.post(environment.BASE_URL + 'auth/verify/resend', token);
     }
     get_questions(numberOfCalls: string[], report_id: string): Observable<any[]> {
         const apiCalls: Observable<any>[] = [];

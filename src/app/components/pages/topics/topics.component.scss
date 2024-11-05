@@ -19,6 +19,10 @@
   /* Optional: Add space between the image and the text */
 }
 
+a {
+  text-decoration: none;
+}
+
 .responsive-div {
   width: 90%; // Make each div take the full width of the container
   display: flex;

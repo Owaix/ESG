@@ -11,6 +11,7 @@
   }
 }
 
+
 .question-list {
   max-width: 100%;
   padding: 20px;
@@ -22,8 +23,25 @@ form {
   flex-direction: column;
 }
 
+.sub-question-item {
+  margin-bottom: 15px;
+  margin-left: 18px;
+  box-shadow: 10px 0px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  text-align: left;
+  background-color: #ececec;
+  padding: 15px;
+  border-radius: 5px;
+}
+
 .question-item {
   margin-bottom: 15px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  text-align: left;
+  background-color: #ececec;
+  padding: 15px;
+  border-radius: 5px;
 }
 
 hr {

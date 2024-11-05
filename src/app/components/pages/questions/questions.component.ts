@@ -9,7 +9,7 @@ import { LoaderService } from 'src/app/service/loader.service';
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css']
+  styleUrls: ['./questions.component.scss']
 })
 
 export class QuestionsComponent implements OnInit, OnDestroy {
@@ -40,7 +40,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loaderService.show();
-    this.dataService.currentData.subscribe(x => {
+    this.mySubscription = this.dataService.currentData.subscribe(x => {
+      console.log(x);
       let reportid = x.report_id;
       let decryptedArray = x.questionList;
       this.title = x.title;
@@ -48,6 +49,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       try {
         this.report_id = this.encrypt.decrypt(reportid);
         this.questionsIds = decryptedArray.split(',');
+
         this.mySubscription = this.service.get_questions(this.questionsIds, this.report_id).subscribe(
           response => {
             for (let i = 0; i < response.length; i++) {
@@ -79,7 +81,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       return anser.includes(optionId);
     }
   }
-  changeSelection(next_questions: any[], question_id: number) {
+  radio_Change(next_questions: any[], question_id: number) {
     const index = this.questionsList.findIndex(item => item.id === question_id && item.id !== 'mc');
 
     if (index !== -1) {
@@ -142,7 +144,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.isModalOpen = false;
   }
 
-  radio_Change(questionId: number, optionId: number) {
+  checkbox_Change(questionId: number, optionId: number) {
     if (!this.selectedOptionsByQuestionId[questionId]) {
       this.selectedOptionsByQuestionId[questionId] = [];
     }
@@ -173,11 +175,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       const matchingOption = question.options.find((option: { id: any; }) => option.id === userAnswerId);
       if (matchingOption && matchingOption.has_next_question) {
         for (let i = 0; i < matchingOption.next_questions.length; i++) {
-          let sub = matchingOption.next_questions[i];          
-          if (sub.type == 'cm') {            
+          let sub = matchingOption.next_questions[i];
+          if (sub.type == 'cm') {
             this.selectedOptionsByQuestionId[sub.id] = JSON.parse(sub.user_answer);
             console.log(this.selectedOptionsByQuestionId[sub.id])
-          }          
+          }
           sub.parent_id = question.id;
           results.push(sub);
         }

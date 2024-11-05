@@ -26,7 +26,7 @@ export class VerifyComponent implements OnInit {
   linkColor = 'white';
 
   errorIconClass = 'fas fa-exclamation-circle';
-  tokenExpiredMessage = 'Token Expired';
+  tokenExpiredMessage = 'Your access token has  expired!';
   tokenExpiredInstructions = 'Your verification token has expired. Please click below to send a new verification email.';
   resendEmailText = 'RESEND EMAIL';
 
@@ -50,11 +50,27 @@ export class VerifyComponent implements OnInit {
       type: "token",
       data: this.token
     }
-    this.mySubscription = this.service.re_verify(obj).subscribe(x => {
-      if (x.status == "SUCCESS") {
-        this.router.navigate(['/everif']);
+
+    this.mySubscription = this.service.re_verify(obj).pipe(
+      catchError(err => {
+        if (err.status === 400) {
+          this.updateForExpiredToken();
+        } else {
+          console.log(err);
+        }
+        return throwError(() => new Error("err"));
+      })
+    ).subscribe(
+      response => {
+        if (response.status == "SUCCESS") {
+          this.router.navigate(['/everif']);
+          console.log(response)
+        }
+      },
+      error => {
+        console.log('Error:', error);
       }
-    })
+    );
   }
 
   ngOnInit(): void {
@@ -71,7 +87,7 @@ export class VerifyComponent implements OnInit {
           } else {
             console.log(err);
           }
-          return throwError(() => new Error(err));
+          return throwError(() => new Error("err"));
         })
       ).subscribe(
         response => {

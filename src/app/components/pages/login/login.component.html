@@ -1,7 +1,7 @@
 <section id="login">
-    <div style="background-color: #D5F6F2;">
+    <div>
         <div class="login-container">
-            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <form style="text-align: center;" (ngSubmit)="onSubmit()" #loginForm="ngForm">
                 <h2>Sign into your account</h2>
 
                 <div class="input-group">
@@ -22,10 +22,10 @@
                             #passwordField="ngModel" pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,}" />
                         <button type="button" (click)="showPassword = !showPassword"
                             style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
-                            <img class="eye" *ngIf="showPassword"
-                                src="../../../../assets/images/hidden.png" alt="Hide password">
-                            <img class="eye" *ngIf="!showPassword"
-                                src="../../../../assets/images/eye.png" alt="Show password">
+                            <img class="eye" *ngIf="showPassword" src="../../../../assets/images/hidden.png"
+                                alt="Hide password">
+                            <img class="eye" *ngIf="!showPassword" src="../../../../assets/images/eye.png"
+                                alt="Show password">
                         </button>
                     </div>
                     <div *ngIf="passwordField.errors?.['minlength'] && passwordField.touched" class="error">

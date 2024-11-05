@@ -98,7 +98,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.questionsList = this.questionsList.filter(item => item.parent_id !== question_id);
       }
     }
-    console.log(this.questionsList);
   }
 
   parseToInt(answer: any) {
@@ -123,10 +122,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           answer: question.user_answer
         }
       }
-      console.log(answer);
       this.mySubscription = this.service.SaveQuestions(answer).subscribe(x => {
         this.errortitle = "success"
-        console.log(x);
       })
       this.openModal();
     }
@@ -152,7 +149,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     } else {
       this.selectedOptionsByQuestionId[questionId].splice(index, 1);
     }
-    console.log(this.selectedOptionsByQuestionId);
   }
 
   ngOnDestroy() {
@@ -173,11 +169,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       const matchingOption = question.options.find((option: { id: any; }) => option.id === userAnswerId);
       if (matchingOption && matchingOption.has_next_question) {
         for (let i = 0; i < matchingOption.next_questions.length; i++) {
-          let sub = matchingOption.next_questions[i];          
-          if (sub.type == 'cm') {            
+          let sub = matchingOption.next_questions[i];
+          if (sub.type == 'cm') {
             this.selectedOptionsByQuestionId[sub.id] = JSON.parse(sub.user_answer);
-            console.log(this.selectedOptionsByQuestionId[sub.id])
-          }          
+          }
           sub.parent_id = question.id;
           results.push(sub);
         }

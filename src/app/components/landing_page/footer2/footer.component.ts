@@ -1,14 +1,15 @@
 import { Component, OnDestroy, AfterViewInit } from "@angular/core";
 
 @Component({
-  selector: 'footers',
+  selector: 'footer2',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.sass']
 })
-export class Footer implements AfterViewInit, OnDestroy {
+export class Footer2 implements AfterViewInit, OnDestroy {
   nav = ['FAQ', 'Terms And Condition', 'Privacy Policy', 'Contact Us', 'Blog'];
 
   nav2 = [];
+
   ngAfterViewInit(): void {
     // const svgs = document.getElementsByClassName('icons-social')[0].getElementsByTagName('svg');
 

@@ -100,7 +100,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.questionsList = this.questionsList.filter(item => item.parent_id !== question_id);
       }
     }
-    console.log(this.questionsList);
+    if (next_questions !== null) {
+      if (next_questions[0].type == 'cm') {
+        if (this.selectedOptionsByQuestionId[next_questions[0].id] === undefined) {
+          this.selectedOptionsByQuestionId[next_questions[0].id] = JSON.parse(next_questions[0].user_answer);
+        }
+      }
+    }
   }
 
   parseToInt(answer: any) {

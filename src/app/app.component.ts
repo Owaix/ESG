@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'body',
@@ -6,6 +7,13 @@ import { Component, AfterViewInit } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements AfterViewInit {
+  headerClass: string = '';
+  constructor(private router: Router) { }
+  ngOnInit() {
+    this.router.events.subscribe(() => {
+      this.headerClass = this.router.url === '/' || this.router.url.includes('#')  ? 'home' : 'other';
+    });
+  }
 
   ngAfterViewInit(): void {
     const footer = document.getElementsByTagName('footer')[0];

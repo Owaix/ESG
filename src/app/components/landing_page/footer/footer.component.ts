@@ -3,7 +3,7 @@ import { Component, OnDestroy, AfterViewInit } from "@angular/core";
 @Component({
   selector: 'footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.sass']
+  styleUrls: ['./footer.component.scss']
 })
 export class Footer implements AfterViewInit, OnDestroy {
   nav = ['FAQ', 'Terms And Condition', 'Privacy Policy', 'Contact Us', 'Blog'];

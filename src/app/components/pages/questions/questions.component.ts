@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/service/api.service';
 import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
 import { LoaderService } from 'src/app/service/loader.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-questions',
@@ -34,6 +35,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   constructor(private encrypt: EncryptionService,
     private service: ApiService,
     private loaderService: LoaderService,
+    private location: Location,
     private router: Router,
     private route: ActivatedRoute, private dataService: DataService) {
   }
@@ -205,6 +207,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     return null;
   }
 
+  back() {
+    this.location.back();
+  }
 
 }
 

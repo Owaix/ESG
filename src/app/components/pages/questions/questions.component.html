@@ -29,7 +29,8 @@
           name="input" required />
         <!-- <hr *ngIf="!last"> -->
       </div>
-      <div style="text-align: right; ">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button (click)="back()" class="links" style="margin-left: 10px;" type="button">Back</button>
         <button class="links" style="margin-right: 10px;" type="submit">Save</button>
       </div>
     </form>

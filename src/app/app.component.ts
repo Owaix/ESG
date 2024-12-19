@@ -8,10 +8,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements AfterViewInit {
   headerClass: string = '';
+  footerClass: string = '';
+
   constructor(private router: Router) { }
   ngOnInit() {
     this.router.events.subscribe(() => {
       this.headerClass = this.router.url === '/' || this.router.url.includes('#')  ? 'home' : 'other';
+      this.footerClass = this.router.url === '/' || this.router.url.includes('#')  ? 'home1' : 'other1';
     });
   }
 

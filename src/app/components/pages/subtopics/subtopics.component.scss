@@ -2,18 +2,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 90%; // Adjusted for more flexible width on smaller screens
+    max-width: 90%;
     margin: 0 auto;
     padding: 1rem;
+    margin-bottom: 10%;
 
-    @media (min-width: 1024px) {
-        max-width: 800px; // Set max-width for larger screens
-    }
+    // @media (min-width: 1024px) {
+    //     max-width: 800px; 
+    // }
 }
 
 .content {
     padding: 1rem;
-    width: 100%; // Use full width within container
+    width: 100%;
     max-width: 800px;
     margin: 0 auto;
 

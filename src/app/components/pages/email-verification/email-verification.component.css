@@ -7,7 +7,7 @@
   max-width: 400px;
   margin: 20px auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  font-family: 'tahoma' !important
 }
 
 .logo {

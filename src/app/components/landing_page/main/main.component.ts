@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 @Component({
   selector: 'main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.sass' ]
+  styleUrls: ['./main.component.sass']
 })
 export class Main {
   reasonItems = [
@@ -21,7 +21,7 @@ export class Main {
       reasonImageUrl: '../../../assets/images/icon-onboarding.svg',
       reasonTitle: 'Fast Onboarding',
       reasonContent: 'We don’t do branches. Open your account in minutes online and start taking control of your finances right away.'
-    } 
+    }
   ]
 
   articleItems = [

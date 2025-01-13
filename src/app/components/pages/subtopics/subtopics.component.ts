@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/service/api.service';
 import { DataService } from 'src/app/service/data.service';
 import { EncryptionService } from 'src/app/service/encrypt.service';
 import { LoaderService } from 'src/app/service/loader.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-subtopics',
@@ -16,6 +17,7 @@ export class SubtopicsComponent {
   private mySubscription: Subscription | null = null;  // Initialized as null
   cards: any[] = [];
   name: string = "";
+  note: string = "";
   errormsg = '';
   errortitle = 'success';
   topic_id: number = 0;
@@ -24,6 +26,7 @@ export class SubtopicsComponent {
 
   constructor(
     private loaderService: LoaderService,
+    private location: Location,
     private encrypt: EncryptionService, private service: ApiService, private router: Router, private route: ActivatedRoute
     , private dataService: DataService
   ) { }
@@ -37,6 +40,7 @@ export class SubtopicsComponent {
           this.cards = x.data.subtopics;
           this.description = x.data.description;
           this.name = x.data.name;
+          this.note = x.data.note;
         }
         this.loaderService.hide();
       })
@@ -98,5 +102,27 @@ export class SubtopicsComponent {
     if (this.mySubscription) {
       this.mySubscription.unsubscribe();
     }
+  }
+
+  tooltipVisible = false;
+  tooltipText = '';
+  tooltipPosition = { x: 0, y: 0 };
+  showTooltip(notes: string | null, event: MouseEvent) {
+    if (notes && notes.trim().length > 0) {
+      this.tooltipText = notes.match(/.{1,100}/g)?.join('\n') || notes;
+      this.tooltipPosition = {
+        x: event.pageX + 10,
+        y: event.pageY + 10,
+      };
+      this.tooltipVisible = true;
+    }
+  }
+
+  hideTooltip() {
+    this.tooltipVisible = false;
+  }
+
+  back() {
+    this.location.back();
   }
 }

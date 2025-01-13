@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Subscription, throwError } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
@@ -37,7 +37,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService,
     private location: Location,
     private router: Router,
-    private route: ActivatedRoute, private dataService: DataService) {
+    private elRef: ElementRef,
+    private route: ActivatedRoute,
+    private dataService: DataService) {
   }
 
   ngOnInit(): void {
@@ -62,6 +64,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               this.questionsList.push(ques);
             }
             this.questionsList = this.addNextQuestionsAsSiblings(this.questionsList);
+            console.log(this.questionsList);
+
             this.loaderService.hide();
           },
           error => {
@@ -152,17 +156,21 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.isModalOpen = false;
   }
 
-  checkbox_Change(questionId: number, optionId: number) {
+  checkbox_Change(questionId: number, option: any) {
+    let optionId = parseInt(option.id);
     if (!this.selectedOptionsByQuestionId[questionId]) {
       this.selectedOptionsByQuestionId[questionId] = [];
     }
+
+    console.log(this.selectedOptionsByQuestionId);
+    console.log(this.selectedOptionsByQuestionId[questionId]);
     const index = this.selectedOptionsByQuestionId[questionId].indexOf(optionId);
     if (index === -1) {
       this.selectedOptionsByQuestionId[questionId].push(optionId);
     } else {
       this.selectedOptionsByQuestionId[questionId].splice(index, 1);
     }
-    console.log(this.selectedOptionsByQuestionId);
+    this.addnotes(option.next_questions, questionId, index);
   }
 
   ngOnDestroy() {
@@ -184,12 +192,21 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       if (matchingOption && matchingOption.has_next_question) {
         for (let i = 0; i < matchingOption.next_questions.length; i++) {
           let sub = matchingOption.next_questions[i];
+          let userAnswer = JSON.parse(sub.user_answer);
           if (sub.type == 'cm') {
-            this.selectedOptionsByQuestionId[sub.id] = JSON.parse(sub.user_answer);
+            this.selectedOptionsByQuestionId[sub.id] = userAnswer;
             console.log(this.selectedOptionsByQuestionId[sub.id])
           }
           sub.parent_id = question.id;
           results.push(sub);
+          let sub_subques = sub.options.find((option: { id: number; }) => option.id === userAnswer[0]);
+          if (sub_subques && sub_subques.has_next_question) {
+            for (let j = 0; j < sub_subques.next_questions.length; j++) {
+              let sub_sub = sub_subques.next_questions[j];
+              sub_sub.parent_id = sub.id;
+              results.push(sub_sub);
+            }
+          }
         }
       }
     }
@@ -207,8 +224,61 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     return null;
   }
 
+  tooltipVisible = false;
+  tooltipText = '';
+  tooltipPosition = { x: 0, y: 0 };
+  showTooltip(notes: string | null, event: MouseEvent) {
+    if (notes && notes.trim().length > 0) {
+      this.tooltipText = notes.match(/.{1,100}/g)?.join('\n') || notes;
+      this.tooltipPosition = {
+        x: event.pageX + 10,
+        y: event.pageY + 10,
+      };
+      this.tooltipVisible = true;
+    }
+  }
+
+  hideTooltip() {
+    this.tooltipVisible = false;
+  }
+
+  addnotes(next_questions: any[], question_id: number, isChecked: number) {
+    const index = this.questionsList.findIndex(item => item.id === question_id && item.id !== 'mc');
+    console.log(index);
+    console.log(isChecked);
+    if (next_questions) {
+      if (index !== -1 && isChecked == -1) {
+        const uniqueNextQuestions = next_questions.filter(
+          newItem => !this.questionsList.some(existingItem => existingItem.id === newItem.id)
+        );
+        uniqueNextQuestions.map(num => num.parent_id = question_id);
+        this.questionsList = [
+          ...this.questionsList.slice(0, index + 1),
+          ...uniqueNextQuestions,
+          ...this.questionsList.slice(index + 1)
+        ];
+        this.questionsList[index + 1].isNextQuestion = true;
+      } else {
+        this.questionsList = this.questionsList.filter(item => item.parent_id !== question_id);
+      }
+    }
+  }
+
   back() {
     this.location.back();
+  }
+
+  adjustHeights(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  }
+
+  ngAfterContentChecked() {
+    var vtextarea = this.elRef.nativeElement.querySelectorAll('textarea')
+    for (let i = 0; i < vtextarea.length; i++) {
+      vtextarea[i].style.height = vtextarea[i].scrollHeight + 'px';
+    }
   }
 
 }

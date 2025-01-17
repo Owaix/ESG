@@ -96,12 +96,21 @@ nav
     z-index: 10 // Ensure it's above other content
 
     &:hover
-      background-color: darken(#f00, 10%) // Darken on hover
+      background-color: darken(#f00, 10%)
 
   &:hover .logout
-    display: block // Show logout button on hover
+    display: block 
 
-// Optional styles for mobile responsiveness
 @media (min-width: 768px)
   nav
-    display: flex // Display as a flexbox for larger screens
+    display: flex 
+
+@media only screen and (min-width: 1099px) and (max-width: 1266px) 
+  nav a
+    padding: 5px
+    font-size: 12px
+
+@media only screen and (min-width: 800px) and (max-width: 1098px) 
+  nav a
+    padding: 4px
+    font-size: 12px

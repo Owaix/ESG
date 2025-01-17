@@ -187,24 +187,27 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       if (question.options === undefined) {
         continue;
       }
+
       const userAnswerId = question.user_answer;
       const matchingOption = question.options.find((option: { id: any; }) => option.id === userAnswerId);
       if (matchingOption && matchingOption.has_next_question) {
         for (let i = 0; i < matchingOption.next_questions.length; i++) {
           let sub = matchingOption.next_questions[i];
-          let userAnswer = JSON.parse(sub.user_answer);
+          let userAnswer = this.safeParseIfJSON(sub.user_answer);
           if (sub.type == 'cm') {
             this.selectedOptionsByQuestionId[sub.id] = userAnswer;
             console.log(this.selectedOptionsByQuestionId[sub.id])
           }
           sub.parent_id = question.id;
           results.push(sub);
-          let sub_subques = sub.options.find((option: { id: number; }) => option.id === userAnswer[0]);
-          if (sub_subques && sub_subques.has_next_question) {
-            for (let j = 0; j < sub_subques.next_questions.length; j++) {
-              let sub_sub = sub_subques.next_questions[j];
-              sub_sub.parent_id = sub.id;
-              results.push(sub_sub);
+          if (sub.options !== undefined) {
+            let sub_subques = sub.options.find((option: { id: number; }) => option.id === userAnswer[0]);
+            if (sub_subques && sub_subques.has_next_question) {
+              for (let j = 0; j < sub_subques.next_questions.length; j++) {
+                let sub_sub = sub_subques.next_questions[j];
+                sub_sub.parent_id = sub.id;
+                results.push(sub_sub);
+              }
             }
           }
         }
@@ -281,6 +284,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     }
   }
 
+  safeParseIfJSON(input: any) {
+    try {
+      return JSON.parse(input);
+    } catch (error) {
+      return input;
+    }
+  }
 }
 
 export class Answers {
